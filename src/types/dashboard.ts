@@ -1,0 +1,7 @@
+export interface DashboardStats {
+  contacts_total: number;
+  companies_total: number;
+  deals_pipeline_count: number;
+  deals_pipeline_value: number;
+  mrr_estimated: number;
+}

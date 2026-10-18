@@ -1,36 +1,68 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Users, TrendingUp, DollarSign, Building2, Plus, ArrowUpRight } from 'lucide-react';
 import { Button } from '../components/common/Button';
+import { DashboardStats } from '../types/dashboard';
+import { getDashboardStats } from '../services/dashboardService';
 
 export const DashboardPage: React.FC = () => {
   const { user, tenant } = useAuth();
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    const loadStats = async () => {
+      try {
+        const data = await getDashboardStats();
+        if (!cancelled) setStats(data);
+      } catch {
+        if (!cancelled) setStats(null);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+    loadStats();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const formatCount = (value: number | undefined): string => {
+    if (loading) return '—';
+    return (value ?? 0).toLocaleString('es');
+  };
+
+  const formatCurrency = (value: number | undefined): string => {
+    if (loading) return '—';
+    return `$${(value ?? 0).toFixed(2)}`;
+  };
 
   const metrics = [
     {
       label: 'Contactos Totales',
-      value: '0',
-      change: '+0% este mes',
+      value: formatCount(stats?.contacts_total),
+      change: 'Conteo en tiempo real',
       icon: Users,
       trend: 'neutral',
     },
     {
       label: 'Empresas Registradas',
-      value: '0',
-      change: '+0% este mes',
+      value: formatCount(stats?.companies_total),
+      change: 'Conteo en tiempo real',
       icon: Building2,
       trend: 'neutral',
     },
     {
       label: 'Deals en Pipeline',
-      value: '$0.00',
+      value: formatCurrency(stats?.deals_pipeline_value),
       change: 'Sin oportunidades activas',
       icon: TrendingUp,
       trend: 'neutral',
     },
     {
       label: 'MRR Estimado',
-      value: '$0.00',
+      value: formatCurrency(stats?.mrr_estimated),
       change: 'Calculado en tiempo real',
       icon: DollarSign,
       trend: 'neutral',

@@ -3,6 +3,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterTenantPage } from './pages/RegisterTenantPage';
 import { DashboardPage } from './pages/DashboardPage';
+import { CompaniesPage } from './pages/CompaniesPage';
+import { ContactsPage } from './pages/ContactsPage';
+import { ContactDetailPage } from './pages/ContactDetailPage';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { DashboardLayout } from './components/layout/DashboardLayout';
 
@@ -18,29 +21,10 @@ export const App: React.FC = () => {
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           
-          {/* Módulos de Core CRM (Placeholders para los siguientes sprints) */}
-          <Route
-            path="/contacts"
-            element={
-              <div className="bg-white p-6 rounded-xl border border-slate-200">
-                <h2 className="text-lg font-bold text-slate-800">Módulo de Contactos</h2>
-                <p className="text-xs text-slate-500 mt-1">
-                  En construcción para Sprint 1. Listado y gestión de contactos B2B.
-                </p>
-              </div>
-            }
-          />
-          <Route
-            path="/companies"
-            element={
-              <div className="bg-white p-6 rounded-xl border border-slate-200">
-                <h2 className="text-lg font-bold text-slate-800">Módulo de Empresas</h2>
-                <p className="text-xs text-slate-500 mt-1">
-                  En construcción para Sprint 1. Directorio y enriquecimiento de cuentas de empresa.
-                </p>
-              </div>
-            }
-          />
+          {/* Módulos de Core CRM (Sprint 1) */}
+          <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="/contacts/:id" element={<ContactDetailPage />} />
+          <Route path="/companies" element={<CompaniesPage />} />
           <Route
             path="/deals"
             element={
