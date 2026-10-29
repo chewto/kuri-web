@@ -6,6 +6,9 @@ import { DashboardPage } from './pages/DashboardPage';
 import { CompaniesPage } from './pages/CompaniesPage';
 import { ContactsPage } from './pages/ContactsPage';
 import { ContactDetailPage } from './pages/ContactDetailPage';
+import { FinanceSummaryPage } from './pages/FinanceSummaryPage';
+import { SubscriptionsPage } from './pages/SubscriptionsPage';
+import { TransactionsPage } from './pages/TransactionsPage';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { DashboardLayout } from './components/layout/DashboardLayout';
 
@@ -37,40 +40,15 @@ export const App: React.FC = () => {
             }
           />
 
-          {/* Módulos de Finanzas & OPEX */}
-          <Route
-            path="/finance/overview"
-            element={
-              <div className="bg-white p-6 rounded-xl border border-slate-200">
-                <h2 className="text-lg font-bold text-slate-800">Finanzas - Visión General</h2>
-                <p className="text-xs text-slate-500 mt-1">
-                  En construcción. Gráficas de ingresos, costes fijos y margen neto.
-                </p>
-              </div>
-            }
-          />
-          <Route
-            path="/finance/subscriptions"
-            element={
-              <div className="bg-white p-6 rounded-xl border border-slate-200">
-                <h2 className="text-lg font-bold text-slate-800">Suscripciones & SaaS (OPEX)</h2>
-                <p className="text-xs text-slate-500 mt-1">
-                  En construcción. Auditoría y seguimiento de recurrencias de software contratado.
-                </p>
-              </div>
-            }
-          />
-          <Route
-            path="/finance/transactions"
-            element={
-              <div className="bg-white p-6 rounded-xl border border-slate-200">
-                <h2 className="text-lg font-bold text-slate-800">Transacciones</h2>
-                <p className="text-xs text-slate-500 mt-1">
-                  En construcción. Registro y conciliación de movimientos monetarios.
-                </p>
-              </div>
-            }
-          />
+          {/* Módulos de Finanzas & OPEX (Sprint 2) */}
+          <Route path="/finance/summary" element={<FinanceSummaryPage />} />
+          <Route path="/finance/overview" element={<Navigate to="/finance/summary" replace />} />
+          
+          <Route path="/subscriptions" element={<SubscriptionsPage />} />
+          <Route path="/finance/subscriptions" element={<Navigate to="/subscriptions" replace />} />
+          
+          <Route path="/transactions" element={<TransactionsPage />} />
+          <Route path="/finance/transactions" element={<Navigate to="/transactions" replace />} />
 
           {/* Módulos de Sistema */}
           <Route

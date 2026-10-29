@@ -39,9 +39,9 @@ export const AppSidebar: React.FC = () => {
     {
       title: 'FINANZAS & OPEX',
       items: [
-        { name: 'Visión General', to: '/finance/overview', icon: DollarSign },
-        { name: 'Suscripciones / SaaS', to: '/finance/subscriptions', icon: Repeat },
-        { name: 'Transacciones', to: '/finance/transactions', icon: CreditCard },
+        { name: 'Visión General', to: '/finance/summary', icon: DollarSign },
+        { name: 'Suscripciones / SaaS', to: '/subscriptions', icon: Repeat },
+        { name: 'Transacciones', to: '/transactions', icon: CreditCard },
       ],
     },
     {
