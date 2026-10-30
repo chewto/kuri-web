@@ -9,6 +9,7 @@ import { ContactDetailPage } from './pages/ContactDetailPage';
 import { FinanceSummaryPage } from './pages/FinanceSummaryPage';
 import { SubscriptionsPage } from './pages/SubscriptionsPage';
 import { TransactionsPage } from './pages/TransactionsPage';
+import { DealsPage } from './pages/DealsPage';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { DashboardLayout } from './components/layout/DashboardLayout';
 
@@ -24,21 +25,11 @@ export const App: React.FC = () => {
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           
-          {/* Módulos de Core CRM (Sprint 1) */}
+          {/* Módulos de Core CRM (Sprints 1 y 3) */}
           <Route path="/contacts" element={<ContactsPage />} />
           <Route path="/contacts/:id" element={<ContactDetailPage />} />
           <Route path="/companies" element={<CompaniesPage />} />
-          <Route
-            path="/deals"
-            element={
-              <div className="bg-white p-6 rounded-xl border border-slate-200">
-                <h2 className="text-lg font-bold text-slate-800">Pipeline de Oportunidades (Deals)</h2>
-                <p className="text-xs text-slate-500 mt-1">
-                  En construcción para Sprint 2. Embudo visual y estimación de ventas.
-                </p>
-              </div>
-            }
-          />
+          <Route path="/deals" element={<DealsPage />} />
 
           {/* Módulos de Finanzas & OPEX (Sprint 2) */}
           <Route path="/finance/summary" element={<FinanceSummaryPage />} />

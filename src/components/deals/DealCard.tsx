@@ -1,63 +1,87 @@
 import React from 'react';
 import { Building2, User, Calendar, MoreVertical, Edit2, Trash2 } from 'lucide-react';
 import { Deal } from '../../types/deal';
+import { formatCurrency, formatDate, isDatePast } from '../../utils/formatters';
 
 interface DealCardProps {
   deal: Deal;
   onEdit: (deal: Deal) => void;
   onDelete: (dealId: string) => void;
   onDragStart: (e: React.DragEvent<HTMLDivElement>, deal: Deal) => void;
+  onDragEnd?: () => void;
+  isDragging?: boolean;
+  isSaving?: boolean;
 }
 
-export const DealCard: React.FC<DealCardProps> = ({ deal, onEdit, onDelete, onDragStart }) => {
+const STATUS_STYLES: Record<Deal['status'], { label: string; className: string }> = {
+  open: {
+    label: 'Abierto',
+    className: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  },
+  won: {
+    label: 'Ganado',
+    className: 'bg-blue-50 text-blue-700 border-blue-200',
+  },
+  lost: {
+    label: 'Perdido',
+    className: 'bg-rose-50 text-rose-700 border-rose-200',
+  },
+};
+
+export const DealCard: React.FC<DealCardProps> = ({
+  deal,
+  onEdit,
+  onDelete,
+  onDragStart,
+  onDragEnd,
+  isDragging = false,
+  isSaving = false,
+}) => {
   const [showMenu, setShowMenu] = React.useState(false);
   const menuRef = React.useRef<HTMLDivElement>(null);
+  const status = STATUS_STYLES[deal.status] ?? STATUS_STYLES.open;
+  const pastDue = deal.status === 'open' && isDatePast(deal.expected_close_date);
 
   React.useEffect(() => {
+    if (!showMenu) return;
+
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setShowMenu(false);
       }
     };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowMenu(false);
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+    document.addEventListener('keydown', handleKeyDown);
 
-  const formatMoney = (val: number = 0) =>
-    new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits: 0,
-    }).format(val);
-
-  const getStatusBadge = () => {
-    switch (deal.status) {
-      case 'won':
-        return (
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-200">
-            Ganado
-          </span>
-        );
-      case 'lost':
-        return (
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">
-            Perdido
-          </span>
-        );
-      default:
-        return null;
-    }
-  };
-
-  const isPastDue = deal.expected_close_date
-    ? new Date(deal.expected_close_date) < new Date(new Date().setHours(0, 0, 0, 0)) && deal.status === 'open'
-    : false;
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showMenu]);
 
   return (
     <div
-      draggable
-      onDragStart={(e) => onDragStart(e, deal)}
-      className="group relative bg-white rounded-xl border border-slate-200/90 p-3.5 shadow-sm hover:shadow-md hover:border-slate-300 transition-all cursor-grab active:cursor-grabbing select-none"
+      draggable={!isSaving}
+      onDragStart={(e) => {
+        setShowMenu(false);
+        onDragStart(e, deal);
+      }}
+      onDragEnd={() => {
+        onDragEnd?.();
+      }}
+      aria-label={`Oportunidad ${deal.title}, valor ${formatCurrency(deal.value)}`}
+      className={`group relative bg-white rounded-xl border border-slate-200/90 p-3.5 shadow-sm transition-all select-none ${
+        isSaving
+          ? 'opacity-60 cursor-wait'
+          : 'cursor-grab active:cursor-grabbing hover:shadow-md hover:border-slate-300'
+      } ${isDragging ? 'opacity-40 ring-2 ring-emerald-500/40' : ''}`}
     >
       {/* Top Header: Title & Context Menu */}
       <div className="flex items-start justify-between gap-2">
@@ -67,6 +91,9 @@ export const DealCard: React.FC<DealCardProps> = ({ deal, onEdit, onDelete, onDr
         <div className="relative shrink-0" ref={menuRef}>
           <button
             type="button"
+            aria-label={`Acciones para ${deal.title}`}
+            aria-haspopup="menu"
+            aria-expanded={showMenu}
             onClick={(e) => {
               e.stopPropagation();
               setShowMenu((prev) => !prev);
@@ -77,9 +104,13 @@ export const DealCard: React.FC<DealCardProps> = ({ deal, onEdit, onDelete, onDr
           </button>
 
           {showMenu && (
-            <div className="absolute right-0 top-6 w-32 bg-white rounded-lg shadow-lg border border-slate-100 py-1 z-20 text-xs">
+            <div
+              role="menu"
+              className="absolute right-0 top-6 w-32 bg-white rounded-lg shadow-lg border border-slate-100 py-1 z-20 text-xs"
+            >
               <button
                 type="button"
+                role="menuitem"
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowMenu(false);
@@ -92,6 +123,7 @@ export const DealCard: React.FC<DealCardProps> = ({ deal, onEdit, onDelete, onDr
               </button>
               <button
                 type="button"
+                role="menuitem"
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowMenu(false);
@@ -108,12 +140,16 @@ export const DealCard: React.FC<DealCardProps> = ({ deal, onEdit, onDelete, onDr
       </div>
 
       {/* Value & Status Badges */}
-      <div className="mt-2.5 flex items-center justify-between">
+      <div className="mt-2.5 flex items-center justify-between gap-2">
         <div className="text-base font-bold text-slate-900 tracking-tight">
-          {formatMoney(deal.value)}
+          {formatCurrency(deal.value)}
         </div>
         <div className="flex items-center gap-1.5">
-          {getStatusBadge()}
+          <span
+            className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold border ${status.className}`}
+          >
+            {status.label}
+          </span>
           {deal.stage_probability !== undefined && deal.stage_probability !== null && (
             <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-600">
               {deal.stage_probability}%
@@ -131,23 +167,23 @@ export const DealCard: React.FC<DealCardProps> = ({ deal, onEdit, onDelete, onDr
           </span>
         </div>
 
-        {deal.contact_name && (
-          <div className="flex items-center gap-1.5 truncate">
-            <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span className="truncate text-slate-500">{deal.contact_name}</span>
-          </div>
-        )}
+        <div className="flex items-center gap-1.5 truncate">
+          <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+          <span className={`truncate ${deal.contact_name ? 'text-slate-500' : 'text-slate-400'}`}>
+            {deal.contact_name || 'Sin contacto'}
+          </span>
+        </div>
 
         {deal.expected_close_date && (
           <div
             className={`flex items-center gap-1.5 text-[11px] ${
-              isPastDue ? 'text-rose-600 font-semibold' : 'text-slate-400'
+              pastDue ? 'text-rose-600 font-semibold' : 'text-slate-400'
             }`}
           >
             <Calendar className="w-3.5 h-3.5 shrink-0" />
-            <span>
-              {isPastDue ? 'Vencido: ' : 'Cierre: '}
-              {deal.expected_close_date}
+            <span className={pastDue ? '' : 'text-slate-500'}>
+              {pastDue ? 'Vencido: ' : 'Cierre: '}
+              {formatDate(deal.expected_close_date)}
             </span>
           </div>
         )}

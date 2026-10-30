@@ -101,7 +101,7 @@ export const AppSidebar: React.FC = () => {
 
       {/* Footer / Status */}
       <div className="p-4 border-t border-slate-800 text-[11px] text-slate-500 flex items-center justify-between">
-        <span>Sprint 0 • Core Web</span>
+        <span>Sprint 3 • Core Web</span>
         <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40">
           v0.1
         </span>
