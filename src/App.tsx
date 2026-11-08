@@ -10,6 +10,9 @@ import { FinanceSummaryPage } from './pages/FinanceSummaryPage';
 import { SubscriptionsPage } from './pages/SubscriptionsPage';
 import { TransactionsPage } from './pages/TransactionsPage';
 import { DealsPage } from './pages/DealsPage';
+import { TeamPage } from './pages/TeamPage';
+import { AnalyticsPage } from './pages/AnalyticsPage';
+import { TenantSettingsPage } from './pages/TenantSettingsPage';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { DashboardLayout } from './components/layout/DashboardLayout';
 
@@ -31,6 +34,9 @@ export const App: React.FC = () => {
           <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/deals" element={<DealsPage />} />
 
+          {/* Analítica & Rentabilidad (Sprint 4) */}
+          <Route path="/analytics" element={<AnalyticsPage />} />
+
           {/* Módulos de Finanzas & OPEX (Sprint 2) */}
           <Route path="/finance/summary" element={<FinanceSummaryPage />} />
           <Route path="/finance/overview" element={<Navigate to="/finance/summary" replace />} />
@@ -41,29 +47,13 @@ export const App: React.FC = () => {
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/finance/transactions" element={<Navigate to="/transactions" replace />} />
 
-          {/* Módulos de Sistema */}
-          <Route
-            path="/settings/team"
-            element={
-              <div className="bg-white p-6 rounded-xl border border-slate-200">
-                <h2 className="text-lg font-bold text-slate-800">Equipo & Roles</h2>
-                <p className="text-xs text-slate-500 mt-1">
-                  En construcción. Gestión de usuarios y permisos basados en roles.
-                </p>
-              </div>
-            }
-          />
-          <Route
-            path="/settings/tenant"
-            element={
-              <div className="bg-white p-6 rounded-xl border border-slate-200">
-                <h2 className="text-lg font-bold text-slate-800">Configuración del Tenant</h2>
-                <p className="text-xs text-slate-500 mt-1">
-                  En construcción. Parámetros de la organización, marca y facturación.
-                </p>
-              </div>
-            }
-          />
+          {/* Módulos de Sistema y Administración (Sprint 4) */}
+          <Route path="/team" element={<TeamPage />} />
+          <Route path="/settings" element={<TenantSettingsPage />} />
+
+          {/* Compatibilidad con rutas anteriores */}
+          <Route path="/settings/team" element={<Navigate to="/team" replace />} />
+          <Route path="/settings/tenant" element={<Navigate to="/settings" replace />} />
         </Route>
       </Route>
 

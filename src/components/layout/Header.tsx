@@ -20,16 +20,22 @@ export const Header: React.FC = () => {
 
   const getRoleBadge = (role?: string) => {
     switch (role) {
-      case 'superadmin':
+      case 'SuperAdmin':
         return (
           <span className="px-2 py-0.5 text-[11px] font-semibold rounded-full bg-purple-100 text-purple-700 border border-purple-200">
             SuperAdmin
           </span>
         );
-      case 'tenant_admin':
+      case 'TenantAdmin':
         return (
           <span className="px-2 py-0.5 text-[11px] font-semibold rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
             Tenant Admin
+          </span>
+        );
+      case 'Auditor':
+        return (
+          <span className="px-2 py-0.5 text-[11px] font-semibold rounded-full bg-amber-100 text-amber-700 border border-amber-200">
+            Auditor
           </span>
         );
       default:

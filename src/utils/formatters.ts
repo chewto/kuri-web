@@ -17,6 +17,18 @@ export const formatCurrency = (value?: number | null): string => {
 };
 
 /**
+ * Formatea un porcentaje numérico (12.5 -> "12.5%").
+ */
+export const formatPercentage = (value?: number | null, fractionDigits = 2): string => {
+  const amount = typeof value === 'number' && Number.isFinite(value) ? value : 0;
+
+  return `${new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: fractionDigits,
+  }).format(amount)}%`;
+};
+
+/**
  * Convierte una fecha ISO (YYYY-MM-DD) en una fecha local legible.
  * Se construye con componentes locales para evitar el desfase de zona horaria
  * que produce `new Date('YYYY-MM-DD')`.

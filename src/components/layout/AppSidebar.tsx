@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Settings,
   Layers,
+  BarChart3,
 } from 'lucide-react';
 
 interface NavSectionItem {
@@ -37,6 +38,12 @@ export const AppSidebar: React.FC = () => {
       ],
     },
     {
+      title: 'ANALÍTICA',
+      items: [
+        { name: 'Rentabilidad & Analítica', to: '/analytics', icon: BarChart3 },
+      ],
+    },
+    {
       title: 'FINANZAS & OPEX',
       items: [
         { name: 'Visión General', to: '/finance/summary', icon: DollarSign },
@@ -47,8 +54,8 @@ export const AppSidebar: React.FC = () => {
     {
       title: 'SISTEMA',
       items: [
-        { name: 'Equipo & Roles', to: '/settings/team', icon: ShieldCheck },
-        { name: 'Configuración del Tenant', to: '/settings/tenant', icon: Settings },
+        { name: 'Equipo & Roles', to: '/team', icon: ShieldCheck },
+        { name: 'Configuración del Tenant', to: '/settings', icon: Settings },
       ],
     },
   ];
@@ -101,7 +108,7 @@ export const AppSidebar: React.FC = () => {
 
       {/* Footer / Status */}
       <div className="p-4 border-t border-slate-800 text-[11px] text-slate-500 flex items-center justify-between">
-        <span>Sprint 3 • Core Web</span>
+        <span>Sprint 4 • Core Web</span>
         <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40">
           v0.1
         </span>
