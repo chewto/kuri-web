@@ -80,6 +80,7 @@ export const RegisterTenantPage: React.FC = () => {
             <div>
               <Input
                 label="Nombre de la Empresa / Organización"
+                labelClassName="text-white"
                 type="text"
                 required
                 placeholder="Acme Corporation"
@@ -93,6 +94,7 @@ export const RegisterTenantPage: React.FC = () => {
             <div>
               <Input
                 label="Correo del Administrador"
+                labelClassName="text-white"
                 type="email"
                 required
                 placeholder="admin@empresa.com"
@@ -106,6 +108,7 @@ export const RegisterTenantPage: React.FC = () => {
             <div>
               <Input
                 label="Contraseña"
+                labelClassName="text-white"
                 type="password"
                 required
                 placeholder="Mínimo 6 caracteres"

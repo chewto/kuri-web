@@ -2,19 +2,20 @@ import React, { forwardRef } from 'react';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
+  labelClassName?: string;
   error?: string;
   helperText?: string;
   leftIcon?: React.ReactNode;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, helperText, leftIcon, className = '', id, ...props }, ref) => {
+  ({ label, labelClassName = 'text-slate-700', error, helperText, leftIcon, className = '', id, ...props }, ref) => {
     const inputId = id || props.name || Math.random().toString(36).substring(7);
 
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={inputId} className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
+          <label htmlFor={inputId} className={`block text-xs font-semibold uppercase tracking-wider mb-1.5 ${labelClassName}`}>
             {label}
           </label>
         )}

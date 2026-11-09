@@ -68,6 +68,7 @@ export const LoginPage: React.FC = () => {
             <div>
               <Input
                 label="Correo Electrónico"
+                labelClassName="text-white"
                 type="email"
                 autoComplete="email"
                 required
@@ -82,6 +83,7 @@ export const LoginPage: React.FC = () => {
             <div>
               <Input
                 label="Contraseña"
+                labelClassName="text-white"
                 type="password"
                 autoComplete="current-password"
                 required

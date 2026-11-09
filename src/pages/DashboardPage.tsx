@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Users, TrendingUp, DollarSign, Building2, Plus, ArrowUpRight } from 'lucide-react';
-import { Button } from '../components/common/Button';
+import { Users, TrendingUp, DollarSign, Building2, ArrowUpRight } from 'lucide-react';
 import { DashboardStats } from '../types/dashboard';
 import { getDashboardStats } from '../services/dashboardService';
 
@@ -88,15 +87,6 @@ export const DashboardPage: React.FC = () => {
           <p className="mt-1 text-sm text-slate-500">
             Comienza gestionando tus contactos corporativos, pipelines de ventas y control de finanzas.
           </p>
-        </div>
-
-        <div className="flex items-center gap-3 shrink-0">
-          <Button variant="outline" size="md">
-            Importar Datos
-          </Button>
-          <Button variant="primary" size="md">
-            <Plus className="h-4 w-4" /> Nuevo Contacto
-          </Button>
         </div>
       </div>
 
