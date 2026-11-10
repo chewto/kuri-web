@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Users, TrendingUp, DollarSign, Building2, ArrowUpRight } from 'lucide-react';
+import { Users, TrendingUp, DollarSign, Building2, ArrowUpRight, Trophy } from 'lucide-react';
 import { DashboardStats } from '../types/dashboard';
 import { ROLE_LABELS } from '../types/team';
 import { getDashboardStats } from '../services/dashboardService';
@@ -44,28 +44,34 @@ export const DashboardPage: React.FC = () => {
       value: formatCount(stats?.contacts_total),
       change: 'Live count',
       icon: Users,
-      trend: 'neutral',
     },
     {
       label: 'Registered Companies',
       value: formatCount(stats?.companies_total),
       change: 'Live count',
       icon: Building2,
-      trend: 'neutral',
     },
     {
       label: 'Deals in Pipeline',
       value: formatCurrency(stats?.deals_pipeline_value),
-      change: 'No active deals',
+      change: loading
+        ? 'Loading...'
+        : `${stats?.deals_pipeline_count ?? 0} active ${stats?.deals_pipeline_count === 1 ? 'deal' : 'deals'}`,
       icon: TrendingUp,
-      trend: 'neutral',
+    },
+    {
+      label: 'Revenue Won (Generated)',
+      value: formatCurrency(stats?.deals_won_value),
+      change: loading
+        ? 'Loading...'
+        : `${stats?.deals_won_count ?? 0} won ${stats?.deals_won_count === 1 ? 'deal' : 'deals'}`,
+      icon: Trophy,
     },
     {
       label: 'Estimated MRR',
       value: formatCurrency(stats?.mrr_estimated),
-      change: 'Calculated in real time',
+      change: 'Active subscriptions',
       icon: DollarSign,
-      trend: 'neutral',
     },
   ];
 
@@ -96,13 +102,13 @@ export const DashboardPage: React.FC = () => {
         <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">
           Business Overview
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
           {metrics.map((item) => {
             const Icon = item.icon;
             return (
               <div
                 key={item.label}
-                className="bg-white p-5 rounded-xl border border-slate-200/70 shadow-sm hover:border-slate-300 transition-all"
+                className="bg-white p-5 rounded-xl border border-slate-200/70 shadow-sm hover:border-slate-300 transition-all flex flex-col justify-between"
               >
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-semibold text-slate-500">{item.label}</span>

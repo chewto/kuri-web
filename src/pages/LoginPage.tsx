@@ -49,7 +49,7 @@ export const LoginPage: React.FC = () => {
         <h2 className="text-2xl font-bold tracking-tight text-white">
           Sign in to Kuri
         </h2>
-        <p className="mt-2 text-xs text-slate-400">
+        <p className="mt-2 text-xs text-slate-300">
           Sign in to your organization's workspace
         </p>
       </div>
@@ -75,7 +75,7 @@ export const LoginPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 leftIcon={<Mail className="h-4 w-4" />}
-                className="bg-slate-950 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500"
+                className="bg-slate-950 border-slate-700 text-white placeholder:text-slate-400 focus:border-emerald-500"
               />
             </div>
 
@@ -90,7 +90,7 @@ export const LoginPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 leftIcon={<Lock className="h-4 w-4" />}
-                className="bg-slate-950 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500"
+                className="bg-slate-950 border-slate-700 text-white placeholder:text-slate-400 focus:border-emerald-500"
               />
             </div>
 
@@ -107,7 +107,7 @@ export const LoginPage: React.FC = () => {
           </form>
 
           <div className="mt-6 pt-6 border-t border-slate-800/80 text-center">
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-300">
               Don't have a workspace yet?{' '}
               <Link
                 to="/register"

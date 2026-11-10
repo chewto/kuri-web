@@ -61,7 +61,7 @@ export const RegisterTenantPage: React.FC = () => {
         <h2 className="text-2xl font-bold tracking-tight text-white">
           Create a New Workspace
         </h2>
-        <p className="mt-2 text-xs text-slate-400">
+        <p className="mt-2 text-xs text-slate-300">
           Set up your Kuri workspace with the initial administrator account
         </p>
       </div>
@@ -86,7 +86,7 @@ export const RegisterTenantPage: React.FC = () => {
                 value={tenantName}
                 onChange={(e) => setTenantName(e.target.value)}
                 leftIcon={<Building2 className="h-4 w-4" />}
-                className="bg-slate-950 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500"
+                className="bg-slate-950 border-slate-700 text-white placeholder:text-slate-400 focus:border-emerald-500"
               />
             </div>
 
@@ -100,7 +100,7 @@ export const RegisterTenantPage: React.FC = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 leftIcon={<Mail className="h-4 w-4" />}
-                className="bg-slate-950 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500"
+                className="bg-slate-950 border-slate-700 text-white placeholder:text-slate-400 focus:border-emerald-500"
               />
             </div>
 
@@ -114,12 +114,12 @@ export const RegisterTenantPage: React.FC = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 leftIcon={<Lock className="h-4 w-4" />}
-                className="bg-slate-950 border-slate-700 text-slate-100 placeholder:text-slate-500 focus:border-emerald-500"
+                className="bg-slate-950 border-slate-700 text-white placeholder:text-slate-400 focus:border-emerald-500"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
+              <label className="block text-xs font-semibold text-white uppercase tracking-wider mb-1.5">
                 Starting plan
               </label>
               <div className="grid grid-cols-2 gap-3">
@@ -133,8 +133,8 @@ export const RegisterTenantPage: React.FC = () => {
                   }`}
                 >
                   <div>
-                    <p className="font-semibold text-slate-200">Free plan</p>
-                    <p className="text-[10px] text-slate-400">Essentials to get started</p>
+                    <p className="font-semibold text-white">Free plan</p>
+                    <p className="text-[10px] text-slate-300">Essentials to get started</p>
                   </div>
                   {plan === 'free' && <CheckCircle2 className="h-4 w-4 text-emerald-400" />}
                 </button>
@@ -149,8 +149,8 @@ export const RegisterTenantPage: React.FC = () => {
                   }`}
                 >
                   <div>
-                    <p className="font-semibold text-slate-200">Pro plan</p>
-                    <p className="text-[10px] text-slate-400">Built to scale B2B teams</p>
+                    <p className="font-semibold text-white">Pro plan</p>
+                    <p className="text-[10px] text-slate-300">Built to scale B2B teams</p>
                   </div>
                   {plan === 'pro' && <CheckCircle2 className="h-4 w-4 text-emerald-400" />}
                 </button>
@@ -170,7 +170,7 @@ export const RegisterTenantPage: React.FC = () => {
           </form>
 
           <div className="mt-6 pt-6 border-t border-slate-800/80 text-center">
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-300">
               Already have an account?{' '}
               <Link
                 to="/login"

@@ -180,7 +180,7 @@ export const CompanyModal: React.FC<CompanyModalProps> = ({
               value={formData.tax_id || ''}
               onChange={(e) => handleTaxIdChange(e.target.value)}
               placeholder="e.g., J-12345678-9"
-              helperText="Prefix J-, G-, V-, or E- followed by digits"
+              helperText="Prefix J- followed by digits"
               error={errors.tax_id}
               required
             />
