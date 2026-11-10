@@ -43,7 +43,7 @@ export const TeamPage: React.FC = () => {
       setErrorNotification(
         getApiErrorMessage(
           error,
-          'No se pudo cargar el equipo. Verifica la conexión con el servidor.'
+          'Could not load the team. Check your connection to the server.'
         )
       );
     } finally {
@@ -78,7 +78,7 @@ export const TeamPage: React.FC = () => {
       await fetchMembers();
     } catch (error: unknown) {
       setErrorNotification(
-        getApiErrorMessage(error, 'No se pudo actualizar el rol del miembro.')
+        getApiErrorMessage(error, "Could not update the member's role.")
       );
     } finally {
       setBusyMemberId(null);
@@ -87,7 +87,7 @@ export const TeamPage: React.FC = () => {
 
   const handleDeactivate = async (member: UserMember) => {
     const confirmed = window.confirm(
-      `¿Desactivar la cuenta de "${member.email}"? El miembro perderá el acceso a la organización, pero su historial se conservará.`
+      `Deactivate the account for "${member.email}"? The member will lose access to the workspace, but their history will be preserved.`
     );
     if (!confirmed) return;
 
@@ -99,7 +99,7 @@ export const TeamPage: React.FC = () => {
       await fetchMembers();
     } catch (error: unknown) {
       setErrorNotification(
-        getApiErrorMessage(error, 'No se pudo desactivar al miembro del equipo.')
+        getApiErrorMessage(error, 'Could not deactivate the member.')
       );
     } finally {
       setBusyMemberId(null);
@@ -112,17 +112,16 @@ export const TeamPage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <ShieldCheck className="h-5 w-5 text-emerald-600" />
-            <h1 className="text-xl font-bold text-slate-900">Equipo & Roles</h1>
+            <h1 className="text-xl font-bold text-slate-900">Team & Roles</h1>
           </div>
           <p className="mt-1 text-xs text-slate-500">
-            Administra los miembros de la organización, sus permisos y el estado de sus
-            cuentas.
+            Manage workspace members, their permissions, and account status.
           </p>
           <div className="mt-2 flex items-center gap-1.5 text-xs text-slate-500">
             <Users className="h-3.5 w-3.5" />
             <span>
-              <strong className="text-slate-700">{members.length}</strong> miembros ·{' '}
-              <strong className="text-emerald-700">{activeMembers}</strong> activos
+              <strong className="text-slate-700">{members.length}</strong> members ·{' '}
+              <strong className="text-emerald-700">{activeMembers}</strong> active
             </span>
           </div>
         </div>
@@ -133,14 +132,14 @@ export const TeamPage: React.FC = () => {
             size="sm"
             onClick={handleRefresh}
             disabled={isLoading}
-            title="Recargar equipo"
+            title="Refresh team"
           >
             <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
           {canManage && (
             <Button variant="primary" size="md" onClick={() => setInviteModalOpen(true)}>
               <Plus className="h-4 w-4" />
-              <span>Invitar Miembro</span>
+              <span>Invite member</span>
             </Button>
           )}
         </div>
@@ -153,7 +152,7 @@ export const TeamPage: React.FC = () => {
             type="button"
             onClick={() => setErrorNotification(null)}
             className="ml-4 font-bold text-rose-500 hover:text-rose-700"
-            aria-label="Cerrar notificación"
+            aria-label="Dismiss notification"
           >
             ✕
           </button>
@@ -165,11 +164,11 @@ export const TeamPage: React.FC = () => {
           <Info className="mt-0.5 h-4 w-4 shrink-0" />
           <div>
             <p className="font-semibold">
-              Tu rol es {user ? ROLE_LABELS[user.role] : 'Usuario'}.
+              Your role is {user ? ROLE_LABELS[user.role] : 'User'}.
             </p>
             <p className="mt-0.5 text-sky-700">
-              Solo un Tenant Admin puede invitar miembros, cambiar roles o desactivar
-              cuentas. Puedes consultar el equipo en modo lectura.
+              Only a Tenant Admin can invite members, change roles, or deactivate accounts.
+              You can view the team in read-only mode.
             </p>
           </div>
         </div>

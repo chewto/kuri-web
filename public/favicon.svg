@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Kuri">
+  <rect width="64" height="64" rx="14" fill="#020617" />
+  <path
+    d="M22 16v32M44 16L24 32l20 16"
+    fill="none"
+    stroke="#34d399"
+    stroke-width="6.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

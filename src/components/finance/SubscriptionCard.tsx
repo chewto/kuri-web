@@ -27,30 +27,30 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   const cycleLabels = {
-    monthly: 'Mensual',
-    quarterly: 'Trimestral',
-    yearly: 'Anual',
+    monthly: 'Monthly',
+    quarterly: 'Quarterly',
+    yearly: 'Yearly',
   };
 
   const statusBadges = {
     active: {
-      label: 'Activa',
+      label: 'Active',
       bg: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
       dot: 'bg-emerald-500',
     },
     paused: {
-      label: 'Pausada',
+      label: 'Paused',
       bg: 'bg-amber-50 text-amber-700 border-amber-200/80',
       dot: 'bg-amber-500',
     },
     cancelled: {
-      label: 'Cancelada',
+      label: 'Canceled',
       bg: 'bg-rose-50 text-rose-700 border-rose-200/80',
       dot: 'bg-rose-500',
     },
   };
 
-  // Normalizar gasto mensual
+  // Normalize monthly cost
   const normalizedMonthlyCost = () => {
     if (subscription.billing_cycle === 'monthly') return subscription.cost;
     if (subscription.billing_cycle === 'yearly') return subscription.cost / 12;
@@ -117,7 +117,7 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
                   className="w-full text-left px-3.5 py-1.5 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 font-medium"
                 >
                   <Edit2 className="w-3.5 h-3.5 text-slate-500" />
-                  Editar servicio
+                  Edit service
                 </button>
 
                 {onToggleStatus && (
@@ -132,12 +132,12 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
                     {subscription.status === 'active' ? (
                       <>
                         <PauseCircle className="w-3.5 h-3.5 text-amber-500" />
-                        Pausar suscripción
+                        Pause subscription
                       </>
                     ) : (
                       <>
                         <PlayCircle className="w-3.5 h-3.5 text-emerald-500" />
-                        Reactivar suscripción
+                        Reactivate subscription
                       </>
                     )}
                   </button>
@@ -153,7 +153,7 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
                   className="w-full text-left px-3.5 py-1.5 text-xs text-rose-600 hover:bg-rose-50 flex items-center gap-2 font-medium"
                 >
                   <Trash2 className="w-3.5 h-3.5 text-rose-500" />
-                  Eliminar
+                  Delete
                 </button>
               </div>
             </>
@@ -165,7 +165,7 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
       <div className="my-4 py-3 px-3.5 bg-slate-50 rounded-xl flex items-baseline justify-between">
         <div>
           <span className="text-[11px] font-medium text-slate-500 uppercase tracking-wider block">
-            Coste por ciclo
+            Cost per cycle
           </span>
           <div className="flex items-baseline gap-1 mt-0.5">
             <span className="text-xl font-bold text-slate-900">
@@ -179,9 +179,9 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
 
         {subscription.billing_cycle !== 'monthly' && (
           <div className="text-right">
-            <span className="text-[10px] text-slate-400 block font-medium">Equiv. mensual</span>
+            <span className="text-[10px] text-slate-400 block font-medium">Monthly equivalent</span>
             <span className="text-xs font-semibold text-slate-700">
-              ~{formatCurrency(normalizedMonthlyCost())}/mes
+              ~{formatCurrency(normalizedMonthlyCost())}/mo
             </span>
           </div>
         )}
@@ -192,7 +192,7 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         <div className="flex items-center justify-between">
           <span className="text-slate-400 flex items-center gap-1.5">
             <Calendar className="w-3.5 h-3.5 text-slate-400" />
-            Próximo cobro:
+            Next billing date:
           </span>
           <span className="font-semibold text-slate-800">
             {subscription.next_billing_date}
@@ -202,17 +202,17 @@ export const SubscriptionCard: React.FC<SubscriptionCardProps> = ({
         <div className="flex items-center justify-between">
           <span className="text-slate-400 flex items-center gap-1.5">
             <Building2 className="w-3.5 h-3.5 text-slate-400" />
-            Empresa / Cliente:
+            Company / Client:
           </span>
-          <span className="font-medium text-slate-800 truncate max-w-[140px]" title={subscription.company_name || 'Uso Interno'}>
-            {subscription.company_name || 'Uso Interno / Org'}
+          <span className="font-medium text-slate-800 truncate max-w-[140px]" title={subscription.company_name || 'Internal use'}>
+            {subscription.company_name || 'Internal use / Org'}
           </span>
         </div>
 
         <div className="flex items-center justify-between pt-1">
           <span className="text-slate-400 flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-slate-400" />
-            Estado:
+            Status:
           </span>
           <span
             className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${currentBadge.bg}`}

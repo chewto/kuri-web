@@ -71,13 +71,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setToken(access_token);
       setUser(loggedUser);
 
-      // Sincronizar datos completos del tenant consultando /me
+      // Sync full workspace data by querying /me
       try {
         const meResponse = await api.get<AuthMeResponse>('/api/auth/me');
         setUser(meResponse.data.user);
         setTenant(meResponse.data.tenant);
       } catch {
-        // En caso de que falle /me, conservamos el usuario previo
+        // If /me fails, keep the previous user
       }
     } finally {
       setIsLoading(false);
@@ -137,7 +137,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth debe ser utilizado dentro de un AuthProvider');
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };

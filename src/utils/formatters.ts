@@ -1,8 +1,8 @@
 const DATE_ONLY_REGEX = /^(\d{4})-(\d{2})-(\d{2})/;
 
 /**
- * Formatea un valor monetario en USD. Muestra decimales solo cuando el monto
- * realmente los tiene, para evitar redondear centavos en el pipeline.
+ * Formats a monetary value in USD. Decimals are shown only when the amount
+ * actually has cents, so pipeline totals are not rounded unnecessarily.
  */
 export const formatCurrency = (value?: number | null): string => {
   const amount = typeof value === 'number' && Number.isFinite(value) ? value : 0;
@@ -17,7 +17,7 @@ export const formatCurrency = (value?: number | null): string => {
 };
 
 /**
- * Formatea un porcentaje numérico (12.5 -> "12.5%").
+ * Formats a numeric percentage (12.5 -> "12.5%").
  */
 export const formatPercentage = (value?: number | null, fractionDigits = 2): string => {
   const amount = typeof value === 'number' && Number.isFinite(value) ? value : 0;
@@ -29,9 +29,9 @@ export const formatPercentage = (value?: number | null, fractionDigits = 2): str
 };
 
 /**
- * Convierte una fecha ISO (YYYY-MM-DD) en una fecha local legible.
- * Se construye con componentes locales para evitar el desfase de zona horaria
- * que produce `new Date('YYYY-MM-DD')`.
+ * Converts an ISO date (YYYY-MM-DD) into a readable local date.
+ * Components are built in local time to avoid the timezone offset produced
+ * by `new Date('YYYY-MM-DD')`.
  */
 export const formatDate = (isoDate?: string | null): string => {
   if (!isoDate) return '';
@@ -44,15 +44,16 @@ export const formatDate = (isoDate?: string | null): string => {
 
   if (Number.isNaN(date.getTime())) return isoDate;
 
-  return new Intl.DateTimeFormat('es-VE', {
-    day: '2-digit',
+  return new Intl.DateTimeFormat('en-US', {
     month: 'short',
+    day: 'numeric',
     year: 'numeric',
   }).format(date);
 };
 
 /**
- * Indica si una fecha ISO de cierre ya pasó respecto al inicio del día actual.
+ * Returns whether an ISO close date is already in the past relative to the
+ * start of the current day.
  */
 export const isDatePast = (isoDate?: string | null): boolean => {
   if (!isoDate) return false;

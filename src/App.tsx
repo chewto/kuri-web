@@ -19,45 +19,45 @@ import { DashboardLayout } from './components/layout/DashboardLayout';
 export const App: React.FC = () => {
   return (
     <Routes>
-      {/* Rutas Públicas de Acceso y Registro */}
+      {/* Public sign-in and registration routes */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterTenantPage />} />
 
-      {/* Rutas Protegidas por JWT y Layout de la Suite */}
+      {/* JWT-protected routes rendered inside the application shell */}
       <Route element={<ProtectedRoute />}>
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
-          
-          {/* Módulos de Core CRM (Sprints 1 y 3) */}
+
+          {/* CRM modules */}
           <Route path="/contacts" element={<ContactsPage />} />
           <Route path="/contacts/:id" element={<ContactDetailPage />} />
           <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/deals" element={<DealsPage />} />
 
-          {/* Analítica & Rentabilidad (Sprint 4) */}
+          {/* Analytics and profitability */}
           <Route path="/analytics" element={<AnalyticsPage />} />
 
-          {/* Módulos de Finanzas & OPEX (Sprint 2) */}
+          {/* Finance and OPEX modules */}
           <Route path="/finance/summary" element={<FinanceSummaryPage />} />
           <Route path="/finance/overview" element={<Navigate to="/finance/summary" replace />} />
-          
+
           <Route path="/subscriptions" element={<SubscriptionsPage />} />
           <Route path="/finance/subscriptions" element={<Navigate to="/subscriptions" replace />} />
-          
+
           <Route path="/transactions" element={<TransactionsPage />} />
           <Route path="/finance/transactions" element={<Navigate to="/transactions" replace />} />
 
-          {/* Módulos de Sistema y Administración (Sprint 4) */}
+          {/* Administration modules */}
           <Route path="/team" element={<TeamPage />} />
           <Route path="/settings" element={<TenantSettingsPage />} />
 
-          {/* Compatibilidad con rutas anteriores */}
+          {/* Compatibility redirects for legacy paths */}
           <Route path="/settings/team" element={<Navigate to="/team" replace />} />
           <Route path="/settings/tenant" element={<Navigate to="/settings" replace />} />
         </Route>
       </Route>
 
-      {/* Redirección por defecto */}
+      {/* Default redirect */}
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

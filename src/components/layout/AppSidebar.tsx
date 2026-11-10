@@ -10,9 +10,9 @@ import {
   CreditCard,
   ShieldCheck,
   Settings,
-  Layers,
   BarChart3,
 } from 'lucide-react';
+import { BrandLogo } from '../common/BrandLogo';
 
 interface NavSectionItem {
   name: string;
@@ -29,33 +29,33 @@ interface NavSection {
 export const AppSidebar: React.FC = () => {
   const sections: NavSection[] = [
     {
-      title: 'CORE CRM',
+      title: 'CRM & SALES',
       items: [
         { name: 'Dashboard', to: '/dashboard', icon: LayoutDashboard },
-        { name: 'Contactos', to: '/contacts', icon: Users },
-        { name: 'Empresas', to: '/companies', icon: Building2 },
-        { name: 'Oportunidades (Deals)', to: '/deals', icon: TrendingUp },
+        { name: 'Contacts', to: '/contacts', icon: Users },
+        { name: 'Companies', to: '/companies', icon: Building2 },
+        { name: 'Deals', to: '/deals', icon: TrendingUp },
       ],
     },
     {
-      title: 'ANALÍTICA',
+      title: 'ANALYTICS',
       items: [
-        { name: 'Rentabilidad & Analítica', to: '/analytics', icon: BarChart3 },
+        { name: 'Analytics & Profitability', to: '/analytics', icon: BarChart3 },
       ],
     },
     {
-      title: 'FINANZAS & OPEX',
+      title: 'FINANCE & OPEX',
       items: [
-        { name: 'Visión General', to: '/finance/summary', icon: DollarSign },
-        { name: 'Suscripciones / SaaS', to: '/subscriptions', icon: Repeat },
-        { name: 'Transacciones', to: '/transactions', icon: CreditCard },
+        { name: 'Financial Overview', to: '/finance/summary', icon: DollarSign },
+        { name: 'Subscriptions / SaaS', to: '/subscriptions', icon: Repeat },
+        { name: 'Transactions', to: '/transactions', icon: CreditCard },
       ],
     },
     {
-      title: 'SISTEMA',
+      title: 'SYSTEM',
       items: [
-        { name: 'Equipo & Roles', to: '/team', icon: ShieldCheck },
-        { name: 'Configuración del Tenant', to: '/settings', icon: Settings },
+        { name: 'Team & Roles', to: '/team', icon: ShieldCheck },
+        { name: 'Workspace Settings', to: '/settings', icon: Settings },
       ],
     },
   ];
@@ -64,16 +64,14 @@ export const AppSidebar: React.FC = () => {
     <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col h-screen fixed left-0 top-0 text-slate-300 select-none z-30">
       {/* Brand Header */}
       <div className="h-16 flex items-center px-6 border-b border-slate-800 gap-3">
-        <div className="h-9 w-9 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-          <Layers className="h-5 w-5" />
-        </div>
+        <BrandLogo size="sm" />
         <div>
-          <h1 className="text-sm font-bold text-white tracking-wide">CRM CORE B2B</h1>
-          <p className="text-[10px] text-emerald-400 font-medium uppercase tracking-wider">Suite Multi-Tenant</p>
+          <h1 className="text-sm font-bold text-white tracking-wide">Kuri</h1>
+          <p className="text-[10px] text-emerald-400 font-medium uppercase tracking-wider">B2B CRM Suite</p>
         </div>
       </div>
 
-      {/* Navegación por Módulos */}
+      {/* Module Navigation */}
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
         {sections.map((section) => (
           <div key={section.title}>
@@ -108,7 +106,7 @@ export const AppSidebar: React.FC = () => {
 
       {/* Footer / Status */}
       <div className="p-4 border-t border-slate-800 text-[11px] text-slate-500 flex items-center justify-between">
-        <span>Sprint 4 • Core Web</span>
+        <span>Kuri • B2B Suite</span>
         <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800/40">
           v0.1
         </span>

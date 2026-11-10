@@ -48,7 +48,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 
   if (isLoading) {
     return (
-      <div className="space-y-3" aria-busy="true" aria-label="Cargando tablero de oportunidades">
+      <div className="space-y-3" aria-busy="true" aria-label="Loading deals board">
         <div className="flex items-center justify-between">
           <div className="h-4 w-44 animate-pulse rounded bg-slate-200" />
           <div className="h-4 w-52 animate-pulse rounded bg-slate-100" />
@@ -85,10 +85,10 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
         <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-slate-500">
           <Inbox className="h-6 w-6" />
         </div>
-        <h3 className="mt-4 text-sm font-bold text-slate-800">No hay etapas configuradas</h3>
+        <h3 className="mt-4 text-sm font-bold text-slate-800">No stages configured</h3>
         <p className="mt-1 max-w-sm text-xs text-slate-500">
-          El embudo comercial aún no tiene etapas. Recarga para inicializar las etapas estándar del
-          tenant o revisa la conexión con el servidor.
+          Your sales funnel has no stages yet. Reload to initialize the workspace's standard stages,
+          or check your connection to the server.
         </p>
         <button
           type="button"
@@ -96,7 +96,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
           className="mt-4 inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2 text-xs font-medium text-slate-700 shadow-sm transition-colors hover:bg-slate-100"
         >
           <RefreshCw className="h-3.5 w-3.5" />
-          Recargar tablero
+          Reload board
         </button>
       </div>
     );
@@ -110,21 +110,21 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2 text-xs text-slate-500">
           <span className="font-semibold uppercase tracking-wider text-slate-400">
-            Etapas del embudo
+            Pipeline stages
           </span>
           <span className="rounded-full border border-slate-200 bg-white px-2 py-0.5 font-semibold text-slate-700">
             {groups.length}
           </span>
           <span className="text-slate-300">·</span>
           <span>
-            {totalDeals} {totalDeals === 1 ? 'oportunidad' : 'oportunidades'}
+            {totalDeals} {totalDeals === 1 ? 'deal' : 'deals'}
           </span>
           <span className="text-slate-300">·</span>
           <span className="font-semibold text-slate-700">{formatCurrency(totalValue)}</span>
         </div>
         <p className="flex items-center gap-1.5 text-xs text-slate-400">
           <GripVertical className="h-3.5 w-3.5" />
-          Arrastra las tarjetas entre etapas para actualizar el pipeline
+          Drag cards between stages to update the pipeline
         </p>
       </div>
 

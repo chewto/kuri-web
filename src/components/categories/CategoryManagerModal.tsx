@@ -40,7 +40,7 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
       const data = await getCategories();
       setCategories(data);
     } catch {
-      setErrorMessage('No se pudieron cargar las categorías existentes.');
+      setErrorMessage("Couldn't load existing categories.");
     } finally {
       setIsLoading(false);
     }
@@ -60,7 +60,7 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) {
-      setErrorMessage('El nombre de la categoría es obligatorio.');
+      setErrorMessage('Category name is required.');
       return;
     }
 
@@ -80,7 +80,7 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       setErrorMessage(
-        error.response?.data?.message || 'Error al registrar la categoría.'
+        error.response?.data?.message || "Couldn't create the category."
       );
     } finally {
       setIsSubmitting(false);
@@ -98,10 +98,10 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-800">
-                Categorías Financieras
+                Financial Categories
               </h2>
               <p className="text-xs text-slate-500">
-                Clasifica suscripciones SaaS y movimientos de caja
+                Classify SaaS subscriptions and cash transactions
               </p>
             </div>
           </div>
@@ -124,11 +124,11 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
           {/* Form to create */}
           <form onSubmit={handleSubmit} className="p-4 bg-slate-50 rounded-xl border border-slate-200/80 space-y-3">
             <span className="text-xs font-bold text-slate-700 block">
-              Añadir Nueva Categoría
+              Add New Category
             </span>
             <Input
-              label="Nombre *"
-              placeholder="Ej: Hosting & Cloud, Marketing, Nómina"
+              label="Name *"
+              placeholder="E.g. Hosting & Cloud, Marketing, Payroll"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -137,7 +137,7 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
             <div>
               <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
                 <Palette className="w-3.5 h-3.5 text-slate-400" />
-                Color de Etiqueta
+                Label Color
               </label>
               <div className="flex items-center gap-2 flex-wrap">
                 {PRESET_COLORS.map((c) => (
@@ -164,22 +164,22 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
               isLoading={isSubmitting}
             >
               <Plus className="w-4 h-4" />
-              <span>Guardar Categoría</span>
+              <span>Save Category</span>
             </Button>
           </form>
 
           {/* List of existing categories */}
           <div>
             <span className="text-xs font-bold text-slate-700 block mb-2">
-              Categorías Existentes ({categories.length})
+              Existing Categories ({categories.length})
             </span>
             {isLoading ? (
               <div className="py-6 text-center text-xs text-slate-400">
-                Cargando categorías...
+                Loading categories...
               </div>
             ) : categories.length === 0 ? (
               <div className="py-4 text-center text-xs text-slate-400 italic">
-                Aún no has creado categorías. Añade una arriba.
+                You haven't created any categories yet. Add one above.
               </div>
             ) : (
               <div className="max-h-48 overflow-y-auto divide-y divide-slate-100 rounded-lg border border-slate-100">
@@ -207,7 +207,7 @@ export const CategoryManagerModal: React.FC<CategoryManagerModalProps> = ({
 
         <div className="px-6 py-3 bg-slate-50 border-t border-slate-100 flex justify-end">
           <Button type="button" variant="outline" size="sm" onClick={onClose}>
-            Cerrar
+            Close
           </Button>
         </div>
       </div>

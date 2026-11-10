@@ -60,7 +60,7 @@ export const KanbanColumn: React.FC<KanbanColumnProps> = ({
 
   return (
     <section
-      aria-label={`Etapa ${group.name}`}
+      aria-label={`Stage ${group.name}`}
       onDragEnter={handleDragEnter}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
@@ -90,7 +90,7 @@ export const KanbanColumn: React.FC<KanbanColumnProps> = ({
           </span>
         </div>
 
-        {/* Subtotal de la etapa */}
+        {/* Stage subtotal */}
         <div className="text-xs font-semibold text-slate-500">
           Total: <span className="font-bold text-slate-800">{formatCurrency(group.total_value)}</span>
         </div>
@@ -106,7 +106,7 @@ export const KanbanColumn: React.FC<KanbanColumnProps> = ({
                 : 'border-slate-200 text-slate-400'
             }`}
           >
-            {isOver ? 'Soltar aquí' : 'Sin tratos en esta etapa'}
+            {isOver ? 'Drop here' : 'No deals in this stage'}
           </div>
         ) : (
           group.deals.map((deal) => (

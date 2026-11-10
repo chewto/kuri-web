@@ -125,23 +125,23 @@ export const ProfitabilityWidget: React.FC<ProfitabilityWidgetProps> = ({
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       <KpiCard
-        title="Ingresos por Ventas"
+        title="Sales Revenue"
         value={formatCurrency(revenue)}
-        subtitle={`${wonDeals} tratos ganados en el periodo`}
+        subtitle={`${wonDeals} deals won in the period`}
         icon={TrendingUp}
         tone="emerald"
         footer={
           <span className="inline-flex items-center gap-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-            Basado en deals con estado ganado
+            Based on deals marked as won
           </span>
         }
       />
 
       <KpiCard
-        title="Gastos Operativos (OPEX)"
+        title="Operating Expenses (OPEX)"
         value={formatCurrency(opex)}
-        subtitle="Suscripciones activas + egresos del periodo"
+        subtitle="Active subscriptions + period expenses"
         icon={CreditCard}
         tone="rose"
         footer={
@@ -150,7 +150,7 @@ export const ProfitabilityWidget: React.FC<ProfitabilityWidgetProps> = ({
               SaaS: <strong className="text-slate-700">{formatCurrency(subscriptionsMonthly)}</strong>
             </span>
             <span>
-              Egresos:{' '}
+              Expenses:{' '}
               <strong className="text-slate-700">{formatCurrency(transactionExpenses)}</strong>
             </span>
           </div>
@@ -158,9 +158,9 @@ export const ProfitabilityWidget: React.FC<ProfitabilityWidgetProps> = ({
       />
 
       <KpiCard
-        title="Margen Neto Real"
+        title="Actual Net Margin"
         value={formatCurrency(netMargin)}
-        subtitle={isProfitable ? 'Ingresos menos OPEX' : 'Pérdida operativa del periodo'}
+        subtitle={isProfitable ? 'Revenue minus OPEX' : 'Operating loss for the period'}
         icon={DollarSign}
         tone={marginTone}
         footer={
@@ -168,7 +168,7 @@ export const ProfitabilityWidget: React.FC<ProfitabilityWidgetProps> = ({
             <span
               className={`inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-semibold ${toneStyles[marginTone].chip}`}
             >
-              {isProfitable ? 'Margen' : 'Pérdida'} {formatPercentage(marginPercentage)}
+              {isProfitable ? 'Margin' : 'Loss'} {formatPercentage(marginPercentage)}
             </span>
             <span className="text-[11px] text-slate-400">
               {formatCurrency(revenue)} − {formatCurrency(opex)}
@@ -178,17 +178,17 @@ export const ProfitabilityWidget: React.FC<ProfitabilityWidgetProps> = ({
       />
 
       <KpiCard
-        title="Burn Rate Mensual"
+        title="Monthly Burn Rate"
         value={formatCurrency(burnRateMonthly)}
-        subtitle={`${activeSubscriptions} suscripciones activas`}
+        subtitle={`${activeSubscriptions} active subscriptions`}
         icon={Flame}
         tone="amber"
         footer={
           <div className="flex items-center justify-between gap-2">
             <span>
-              Anualizado: <strong className="text-slate-700">{formatCurrency(burnRateAnnual)}</strong>
+              Annualized: <strong className="text-slate-700">{formatCurrency(burnRateAnnual)}</strong>
             </span>
-            <span className="text-[11px] text-slate-400">Solo coste fijo SaaS</span>
+            <span className="text-[11px] text-slate-400">SaaS fixed costs only</span>
           </div>
         }
       />

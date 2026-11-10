@@ -12,7 +12,7 @@ export const ProtectedRoute: React.FC = () => {
           <div className="h-12 w-12 rounded-full border-4 border-emerald-500/20 border-t-emerald-500 animate-spin" />
         </div>
         <p className="mt-4 text-xs font-semibold text-slate-400 uppercase tracking-widest">
-          Autenticando sesión...
+          Restoring session...
         </p>
       </div>
     );

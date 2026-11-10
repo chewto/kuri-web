@@ -27,7 +27,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
       <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
         <div className="p-12 text-center text-slate-400">
           <div className="animate-spin w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full mx-auto mb-3" />
-          <p className="text-xs font-medium">Cargando transacciones...</p>
+          <p className="text-xs font-medium">Loading transactions...</p>
         </div>
       </div>
     );
@@ -40,10 +40,10 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
           <Tag className="w-6 h-6" />
         </div>
         <h3 className="text-sm font-bold text-slate-800">
-          No se encontraron movimientos registrados
+          No transactions found
         </h3>
         <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-          No hay transacciones que coincidan con los filtros seleccionados o aún no has registrado cobros o pagos.
+          No transactions match the selected filters, or you haven't recorded any payments yet.
         </p>
       </div>
     );
@@ -55,13 +55,13 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
         <table className="w-full text-left text-xs">
           <thead>
             <tr className="bg-slate-50/80 border-b border-slate-200 text-slate-500 font-semibold uppercase tracking-wider">
-              <th className="py-3 px-4">Fecha</th>
-              <th className="py-3 px-4">Descripción</th>
-              <th className="py-3 px-4">Categoría</th>
-              <th className="py-3 px-4">Empresa / Cliente</th>
-              <th className="py-3 px-4">Tipo</th>
-              <th className="py-3 px-4 text-right">Monto</th>
-              <th className="py-3 px-4 text-center">Acciones</th>
+              <th className="py-3 px-4">Date</th>
+              <th className="py-3 px-4">Description</th>
+              <th className="py-3 px-4">Category</th>
+              <th className="py-3 px-4">Company / Client</th>
+              <th className="py-3 px-4">Type</th>
+              <th className="py-3 px-4 text-right">Amount</th>
+              <th className="py-3 px-4 text-center">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -113,7 +113,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                         {tx.company_name}
                       </span>
                     ) : (
-                      <span className="text-slate-400 italic text-[11px]">Interno</span>
+                      <span className="text-slate-400 italic text-[11px]">Internal</span>
                     )}
                   </td>
 
@@ -128,12 +128,12 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                       {isIncome ? (
                         <>
                           <ArrowUpRight className="w-3 h-3 text-emerald-600" />
-                          Ingreso
+                          Income
                         </>
                       ) : (
                         <>
                           <ArrowDownRight className="w-3 h-3 text-rose-600" />
-                          Egreso
+                          Expense
                         </>
                       )}
                     </span>
@@ -154,7 +154,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                       type="button"
                       onClick={() => onDelete(tx)}
                       className="p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
-                      title="Eliminar transacción"
+                      title="Delete transaction"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>

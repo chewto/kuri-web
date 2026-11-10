@@ -15,15 +15,15 @@ interface DealCardProps {
 
 const STATUS_STYLES: Record<Deal['status'], { label: string; className: string }> = {
   open: {
-    label: 'Abierto',
+    label: 'Open',
     className: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   },
   won: {
-    label: 'Ganado',
+    label: 'Won',
     className: 'bg-blue-50 text-blue-700 border-blue-200',
   },
   lost: {
-    label: 'Perdido',
+    label: 'Lost',
     className: 'bg-rose-50 text-rose-700 border-rose-200',
   },
 };
@@ -76,7 +76,7 @@ export const DealCard: React.FC<DealCardProps> = ({
       onDragEnd={() => {
         onDragEnd?.();
       }}
-      aria-label={`Oportunidad ${deal.title}, valor ${formatCurrency(deal.value)}`}
+      aria-label={`Deal ${deal.title}, value ${formatCurrency(deal.value)}`}
       className={`group relative bg-white rounded-xl border border-slate-200/90 p-3.5 shadow-sm transition-all select-none ${
         isSaving
           ? 'opacity-60 cursor-wait'
@@ -91,7 +91,7 @@ export const DealCard: React.FC<DealCardProps> = ({
         <div className="relative shrink-0" ref={menuRef}>
           <button
             type="button"
-            aria-label={`Acciones para ${deal.title}`}
+            aria-label={`Actions for ${deal.title}`}
             aria-haspopup="menu"
             aria-expanded={showMenu}
             onClick={(e) => {
@@ -119,7 +119,7 @@ export const DealCard: React.FC<DealCardProps> = ({
                 className="w-full text-left px-3 py-1.5 flex items-center gap-2 text-slate-700 hover:bg-slate-50"
               >
                 <Edit2 className="w-3.5 h-3.5 text-slate-400" />
-                Editar
+                Edit
               </button>
               <button
                 type="button"
@@ -132,7 +132,7 @@ export const DealCard: React.FC<DealCardProps> = ({
                 className="w-full text-left px-3 py-1.5 flex items-center gap-2 text-rose-600 hover:bg-rose-50"
               >
                 <Trash2 className="w-3.5 h-3.5 text-rose-500" />
-                Eliminar
+                Delete
               </button>
             </div>
           )}
@@ -163,14 +163,14 @@ export const DealCard: React.FC<DealCardProps> = ({
         <div className="flex items-center gap-1.5 truncate">
           <Building2 className="w-3.5 h-3.5 text-slate-400 shrink-0" />
           <span className="truncate font-medium text-slate-700">
-            {deal.company_name || 'Sin empresa'}
+            {deal.company_name || 'No company'}
           </span>
         </div>
 
         <div className="flex items-center gap-1.5 truncate">
           <User className="w-3.5 h-3.5 text-slate-400 shrink-0" />
           <span className={`truncate ${deal.contact_name ? 'text-slate-500' : 'text-slate-400'}`}>
-            {deal.contact_name || 'Sin contacto'}
+            {deal.contact_name || 'No contact'}
           </span>
         </div>
 
@@ -182,7 +182,7 @@ export const DealCard: React.FC<DealCardProps> = ({
           >
             <Calendar className="w-3.5 h-3.5 shrink-0" />
             <span className={pastDue ? '' : 'text-slate-500'}>
-              {pastDue ? 'Vencido: ' : 'Cierre: '}
+              {pastDue ? 'Overdue: ' : 'Expected close: '}
               {formatDate(deal.expected_close_date)}
             </span>
           </div>

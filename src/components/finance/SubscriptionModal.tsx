@@ -58,7 +58,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
   useEffect(() => {
     if (!isOpen) return;
-    // Cargar empresas y refrescar categorA-as cada vez que se abre
+    // Load companies and refresh categories each time the modal opens
     getAllCompanies().then(setCompanies).catch(() => {});
     onRefreshCategories?.();
 
@@ -93,15 +93,15 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'El nombre del servicio o herramienta es requerido.';
+      newErrors.name = 'The service or tool name is required.';
     }
 
     if (formData.cost === undefined || formData.cost === null || isNaN(Number(formData.cost)) || Number(formData.cost) < 0) {
-      newErrors.cost = 'El costo debe ser un valor numérico mayor o igual a 0.';
+      newErrors.cost = 'Cost must be a numeric value greater than or equal to 0.';
     }
 
     if (!formData.next_billing_date) {
-      newErrors.next_billing_date = 'La fecha de próximo cobro es obligatoria.';
+      newErrors.next_billing_date = 'Next billing date is required.';
     }
 
     setErrors(newErrors);
@@ -124,7 +124,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       setErrors({
-        submit: error.response?.data?.message || 'Error al guardar la suscripción. Revisa los datos.',
+        submit: error.response?.data?.message || "Couldn't save the subscription. Check your details.",
       });
     } finally {
       setIsSubmitting(false);
@@ -142,12 +142,12 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-800">
-                {initialData ? 'Editar Suscripción / SaaS' : 'Nueva Suscripción / SaaS'}
+                {initialData ? 'Edit Subscription / SaaS' : 'New Subscription / SaaS'}
               </h2>
               <p className="text-xs text-slate-500">
                 {initialData
-                  ? 'Modifica los parámetros y recurrencia del servicio'
-                  : 'Registra un software u OPEX recurrente de la organización'}
+                  ? 'Update the service details and billing cycle'
+                  : 'Add a recurring software or OPEX expense for your organization'}
               </p>
             </div>
           </div>
@@ -169,8 +169,8 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
           )}
 
           <Input
-            label="Nombre del Servicio / Herramienta *"
-            placeholder="Ej: Claude Pro, AWS Infrastructure, Figma Org, Notion"
+            label="Service / Tool Name *"
+            placeholder="E.g. Claude Pro, AWS Infrastructure, Figma Org, Notion"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             error={errors.name}
@@ -179,7 +179,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
-              label="Costo / Monto (USD) *"
+              label="Cost / Amount (USD) *"
               type="number"
               step="0.01"
               min="0"
@@ -197,7 +197,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                Ciclo de Cobro *
+                Billing Cycle *
               </label>
               <select
                 value={formData.billing_cycle}
@@ -209,16 +209,16 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                 }
                 className="block w-full rounded-lg border border-slate-300 py-2 px-3 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
               >
-                <option value="monthly">Mensual</option>
-                <option value="quarterly">Trimestral</option>
-                <option value="yearly">Anual</option>
+                <option value="monthly">Monthly</option>
+                <option value="quarterly">Quarterly</option>
+                <option value="yearly">Yearly</option>
               </select>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
-              label="Próximo Cobro (Fecha) *"
+              label="Next Billing Date *"
               type="date"
               value={formData.next_billing_date}
               onChange={(e) =>
@@ -230,7 +230,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                Estado *
+                Status *
               </label>
               <select
                 value={formData.status}
@@ -242,18 +242,18 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                 }
                 className="block w-full rounded-lg border border-slate-300 py-2 px-3 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
               >
-                <option value="active">Activa</option>
-                <option value="paused">Pausada</option>
-                <option value="cancelled">Cancelada</option>
+                <option value="active">Active</option>
+                <option value="paused">Paused</option>
+                <option value="cancelled">Canceled</option>
               </select>
             </div>
           </div>
 
-          {/* Categoría */}
+          {/* Category */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
-                Categoría Financiera
+                Financial Category
               </label>
               {onOpenCategoryManager && (
                 <button
@@ -262,7 +262,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
                   className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold flex items-center gap-1"
                 >
                   <Plus className="w-3 h-3" />
-                  Gestionar Categorías
+                  Manage Categories
                 </button>
               )}
             </div>
@@ -273,7 +273,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
               }
               className="block w-full rounded-lg border border-slate-300 py-2 px-3 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
             >
-              <option value="">-- Sin categoría asignada --</option>
+              <option value="">-- No category assigned --</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
@@ -282,10 +282,10 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
             </select>
           </div>
 
-          {/* Empresa cliente o interna */}
+          {/* Client or internal company */}
           <div>
             <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-              Empresa / Cliente Asociado (Opcional)
+              Company / Client (Optional)
             </label>
             <select
               value={formData.company_id || ''}
@@ -294,7 +294,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
               }
               className="block w-full rounded-lg border border-slate-300 py-2 px-3 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
             >
-              <option value="">-- Uso Interno / Organización General --</option>
+              <option value="">-- Internal Use / General Organization --</option>
               {companies.map((comp) => (
                 <option key={comp.id} value={comp.id}>
                   {comp.name} {comp.tax_id ? `(${comp.tax_id})` : ''}
@@ -302,7 +302,7 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
               ))}
             </select>
             <p className="text-[11px] text-slate-400 mt-1">
-              Si esta suscripción se adquiere específicamente para un cliente o proyecto, elígelo aquí.
+              If this subscription is purchased specifically for a client or project, select it here.
             </p>
           </div>
 
@@ -313,10 +313,10 @@ export const SubscriptionModal: React.FC<SubscriptionModalProps> = ({
               onClick={onClose}
               disabled={isSubmitting}
             >
-              Cancelar
+              Cancel
             </Button>
             <Button type="submit" variant="primary" isLoading={isSubmitting}>
-              {initialData ? 'Actualizar Suscripción' : 'Guardar Suscripción'}
+              {initialData ? 'Update Subscription' : 'Save Subscription'}
             </Button>
           </div>
         </form>

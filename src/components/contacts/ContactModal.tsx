@@ -57,7 +57,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Sanitizador de teléfono: solo permite '+' al inicio y dígitos
+  // Phone sanitizer: allows only a leading '+' and digits
   const handlePhoneChange = (value: string) => {
     setFormData((prev) => ({ ...prev, phone: sanitizePhone(value) }));
   };
@@ -65,15 +65,15 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
     if (!formData.first_name.trim()) {
-      newErrors.first_name = 'El nombre es obligatorio';
+      newErrors.first_name = 'First name is required';
     }
     if (!formData.last_name.trim()) {
-      newErrors.last_name = 'El apellido es obligatorio';
+      newErrors.last_name = 'Last name is required';
     }
     if (!formData.email.trim()) {
-      newErrors.email = 'El email es obligatorio';
+      newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Ingresa un formato de email válido';
+      newErrors.email = 'Enter a valid email address';
     }
     const phoneError = validatePhone(formData.phone || '');
     if (phoneError) {
@@ -94,7 +94,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       setErrors({
-        submit: error.response?.data?.message || 'Error al guardar el contacto. Revisa los datos.',
+        submit: error.response?.data?.message || 'Could not save the contact. Check your information.',
       });
     } finally {
       setIsSubmitting(false);
@@ -112,10 +112,12 @@ export const ContactModal: React.FC<ContactModalProps> = ({
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-800">
-                {initialData ? 'Editar Contacto' : 'Nuevo Contacto'}
+                {initialData ? 'Edit Contact' : 'New Contact'}
               </h2>
               <p className="text-xs text-slate-500">
-                {initialData ? 'Actualiza los datos del profesional' : 'Añade una persona de contacto a tu CRM'}
+                {initialData
+                  ? "Update the contact's details"
+                  : 'Add a contact person to Kuri'}
               </p>
             </div>
           </div>
@@ -137,18 +139,18 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
-              label="Nombre *"
+              label="First name *"
               value={formData.first_name}
               onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
-              placeholder="Ej: Laura"
+              placeholder="Jane"
               error={errors.first_name}
               required
             />
             <Input
-              label="Apellidos *"
+              label="Last name *"
               value={formData.last_name}
               onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
-              placeholder="Ej: Gómez Méndez"
+              placeholder="Smith"
               error={errors.last_name}
               required
             />
@@ -156,42 +158,42 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
-              label="Correo Electrónico *"
+              label="Email address *"
               type="email"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              placeholder="laura.gomez@empresa.com"
+              placeholder="jane.smith@company.com"
               error={errors.email}
               required
             />
             <Input
-              label="Teléfono Móvil / Directo"
+              label="Mobile / Direct phone"
               type="tel"
               value={formData.phone || ''}
               onChange={(e) => handlePhoneChange(e.target.value)}
-              placeholder="Ej: +58 4121234567"
-              helperText="Solo números, exactamente 10 dígitos (ej: 4121234567)"
+              placeholder="e.g., +58 4121234567"
+              helperText="Numbers only, exactly 10 digits (e.g., 4121234567)"
               error={errors.phone}
             />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
-              label="Cargo / Título"
+              label="Title / Position"
               value={formData.position || ''}
               onChange={(e) => setFormData({ ...formData, position: e.target.value })}
-              placeholder="Ej: Directora de Compras"
+              placeholder="e.g., Head of Procurement"
             />
             <div>
               <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-                Empresa Asociada
+                Associated company
               </label>
               <select
                 value={formData.company_id || ''}
                 onChange={(e) => setFormData({ ...formData, company_id: e.target.value })}
                 className="block w-full rounded-lg border border-slate-300 text-sm py-2 px-3 text-slate-800 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-colors bg-white shadow-sm"
               >
-                <option value="">-- Sin Empresa Asignada --</option>
+                <option value="">-- No company assigned --</option>
                 {companies.map((c) => (
                   <option key={c.id} value={c.id}>
                     {c.name}
@@ -203,10 +205,10 @@ export const ContactModal: React.FC<ContactModalProps> = ({
 
           <div className="pt-4 flex items-center justify-end gap-3 border-t border-slate-100">
             <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
-              Cancelar
+              Cancel
             </Button>
             <Button type="submit" variant="primary" isLoading={isSubmitting}>
-              {initialData ? 'Actualizar Contacto' : 'Crear Contacto'}
+              {initialData ? 'Save changes' : 'Create Contact'}
             </Button>
           </div>
         </form>

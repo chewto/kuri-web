@@ -21,7 +21,7 @@ export const CompanyTable: React.FC<CompanyTableProps> = ({
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
         <div className="p-8 text-center">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
-          <p className="mt-2 text-sm text-slate-500">Cargando empresas...</p>
+          <p className="mt-2 text-sm text-slate-500">Loading companies...</p>
         </div>
       </div>
     );
@@ -33,9 +33,9 @@ export const CompanyTable: React.FC<CompanyTableProps> = ({
         <div className="mx-auto w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-3">
           <Building2 className="w-6 h-6" />
         </div>
-        <h3 className="text-sm font-semibold text-slate-800">No se encontraron empresas</h3>
+        <h3 className="text-sm font-semibold text-slate-800">No companies found</h3>
         <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-          Comienza registrando tu primera empresa cliente o ajusta el criterio de búsqueda.
+          Start by adding your first client company, or adjust your search criteria.
         </p>
       </div>
     );
@@ -47,12 +47,12 @@ export const CompanyTable: React.FC<CompanyTableProps> = ({
         <table className="w-full text-left text-sm text-slate-600">
           <thead className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
             <tr>
-              <th className="py-3.5 px-4">Empresa</th>
-              <th className="py-3.5 px-4">Tax ID / CIF</th>
-              <th className="py-3.5 px-4">Industria</th>
-              <th className="py-3.5 px-4">Sitio Web</th>
-              <th className="py-3.5 px-4">Teléfono</th>
-              <th className="py-3.5 px-4 text-right">Acciones</th>
+              <th className="py-3.5 px-4">Company</th>
+              <th className="py-3.5 px-4">Tax ID / Registration No.</th>
+              <th className="py-3.5 px-4">Industry</th>
+              <th className="py-3.5 px-4">Website</th>
+              <th className="py-3.5 px-4">Phone</th>
+              <th className="py-3.5 px-4 text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -122,7 +122,7 @@ export const CompanyTable: React.FC<CompanyTableProps> = ({
                       size="sm"
                       onClick={() => onEdit(company)}
                       className="text-slate-500 hover:text-slate-700 h-8 w-8 p-0"
-                      title="Editar empresa"
+                      title="Edit company"
                     >
                       <Edit2 className="w-4 h-4" />
                     </Button>
@@ -131,7 +131,7 @@ export const CompanyTable: React.FC<CompanyTableProps> = ({
                       size="sm"
                       onClick={() => onDelete(company)}
                       className="text-slate-400 hover:text-rose-600 h-8 w-8 p-0"
-                      title="Eliminar empresa"
+                      title="Delete company"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>

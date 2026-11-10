@@ -21,7 +21,7 @@ export const ASSIGNABLE_ROLES: Role[] = ['TenantAdmin', 'User', 'Auditor'];
 
 export const ROLE_LABELS: Record<MemberRole, string> = {
   TenantAdmin: 'Tenant Admin',
-  User: 'Usuario',
+  User: 'User',
   Auditor: 'Auditor',
   SuperAdmin: 'Super Admin',
 };

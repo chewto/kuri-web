@@ -14,16 +14,16 @@ export const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSubmit }) =>
   const [error, setError] = useState<string | null>(null);
 
   const typesConfig: { type: ActivityType; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
-    { type: 'note', label: 'Nota', icon: FileText },
-    { type: 'call', label: 'Llamada', icon: Phone },
-    { type: 'email', label: 'Correo', icon: Mail },
-    { type: 'meeting', label: 'Reunión', icon: Calendar },
+    { type: 'note', label: 'Note', icon: FileText },
+    { type: 'call', label: 'Call', icon: Phone },
+    { type: 'email', label: 'Email', icon: Mail },
+    { type: 'meeting', label: 'Meeting', icon: Calendar },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!description.trim()) {
-      setError('Por favor escribe una descripción para el registro de actividad.');
+      setError('Please enter a description for the activity log.');
       return;
     }
 
@@ -34,7 +34,7 @@ export const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSubmit }) =>
       setDescription('');
     } catch (err: unknown) {
       const e = err as { response?: { data?: { message?: string } } };
-      setError(e.response?.data?.message || 'Error al registrar la actividad');
+      setError(e.response?.data?.message || 'Could not log the activity');
     } finally {
       setIsSubmitting(false);
     }
@@ -42,9 +42,9 @@ export const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSubmit }) =>
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
-      <h3 className="text-sm font-bold text-slate-800 mb-3">Registrar Nueva Interacción</h3>
+      <h3 className="text-sm font-bold text-slate-800 mb-3">Log New Interaction</h3>
 
-      {/* Selector de Tipo */}
+      {/* Type selector */}
       <div className="flex flex-wrap gap-2 mb-4">
         {typesConfig.map((item) => {
           const Icon = item.icon;
@@ -75,12 +75,12 @@ export const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSubmit }) =>
             onChange={(e) => setDescription(e.target.value)}
             placeholder={
               type === 'note'
-                ? 'Detalles o apuntes sobre la conversación...'
+                ? 'Details or notes about the conversation...'
                 : type === 'call'
-                ? 'Resumen de llamada telefónica realizada o recibida...'
+                ? 'Summary of the call made or received...'
                 : type === 'email'
-                ? 'Resumen o notas sobre correo electrónico enviado...'
-                : 'Minuta o acuerdos de la reunión...'
+                ? 'Summary or notes about the email sent...'
+                : 'Meeting minutes or agreed action items...'
             }
             className="w-full rounded-lg border border-slate-300 text-sm p-3 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600 transition-colors"
           />
@@ -89,11 +89,11 @@ export const AddActivityForm: React.FC<AddActivityFormProps> = ({ onSubmit }) =>
 
         <div className="flex items-center justify-between">
           <span className="text-[11px] text-slate-400">
-            Quedará guardado inmediatamente en el timeline del contacto.
+            It will be saved immediately to the contact's timeline.
           </span>
           <Button type="submit" variant="primary" size="sm" isLoading={isSubmitting}>
             <Send className="w-3.5 h-3.5" />
-            <span>Guardar Actividad</span>
+            <span>Save activity</span>
           </Button>
         </div>
       </form>

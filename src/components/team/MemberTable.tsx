@@ -77,10 +77,10 @@ export const MemberTable: React.FC<MemberTableProps> = ({
           <Users className="h-6 w-6" />
         </div>
         <h3 className="text-sm font-semibold text-slate-800">
-          No hay miembros registrados
+          No team members yet
         </h3>
         <p className="mx-auto mt-1 max-w-sm text-xs text-slate-500">
-          Invita al primer miembro del equipo para asignarle un rol dentro de la organización.
+          Invite your first team member and assign them a role in the workspace.
         </p>
       </div>
     );
@@ -92,11 +92,11 @@ export const MemberTable: React.FC<MemberTableProps> = ({
         <table className="w-full min-w-[860px] text-left text-sm text-slate-600">
           <thead className="border-b border-slate-200 bg-slate-50/80 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
             <tr>
-              <th className="px-4 py-3.5">Usuario</th>
-              <th className="px-4 py-3.5">Rol actual</th>
-              <th className="px-4 py-3.5">Estado</th>
-              <th className="px-4 py-3.5">Fecha de registro</th>
-              {canManage && <th className="px-4 py-3.5 text-right">Acciones</th>}
+              <th className="px-4 py-3.5">Member</th>
+              <th className="px-4 py-3.5">Role</th>
+              <th className="px-4 py-3.5">Status</th>
+              <th className="px-4 py-3.5">Joined</th>
+              {canManage && <th className="px-4 py-3.5 text-right">Actions</th>}
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -127,7 +127,7 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                           </p>
                           {isSelf && (
                             <span className="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[10px] font-semibold text-emerald-700">
-                              Tú
+                              You
                             </span>
                           )}
                         </div>
@@ -146,8 +146,8 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                             onRoleChange(member, event.target.value as Role)
                           }
                           disabled={isBusy}
-                          aria-label={`Cambiar rol de ${member.email}`}
-                          title="Cambiar rol del miembro"
+                          aria-label={`Change role for ${member.email}`}
+                          title="Change member role"
                           className="rounded-lg border border-slate-300 bg-white px-2 py-1 text-[11px] font-medium text-slate-700 shadow-sm transition-colors focus:border-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-600/20 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
                         >
                           {ASSIGNABLE_ROLES.map((role) => (
@@ -161,11 +161,11 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                         <span className="inline-flex items-center gap-1 text-[10px] text-slate-400">
                           {isSelf ? (
                             <>
-                              <Lock className="h-3 w-3" /> Rol protegido
+                              <Lock className="h-3 w-3" /> Protected role
                             </>
                           ) : (
                             <>
-                              <ShieldCheck className="h-3 w-3" /> Solo lectura
+                              <ShieldCheck className="h-3 w-3" /> Read only
                             </>
                           )}
                         </span>
@@ -177,12 +177,12 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                     {member.is_active ? (
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-700">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                        Activo
+                        Active
                       </span>
                     ) : (
                       <span className="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-0.5 text-[11px] font-semibold text-slate-500">
                         <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
-                        Inactivo
+                        Inactive
                       </span>
                     )}
                   </td>
@@ -196,14 +196,14 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                       {isSelf ? (
                         <span
                           className="inline-flex h-8 w-8 items-center justify-center text-slate-300"
-                          title="No puedes desactivar tu propia cuenta"
+                          title="You can't deactivate your own account"
                         >
                           <Lock className="h-4 w-4" />
                         </span>
                       ) : isSuperAdmin ? (
                         <span
                           className="inline-flex h-8 w-8 items-center justify-center text-slate-300"
-                          title="No está permitido desactivar a un SuperAdmin"
+                          title="Super Admins can't be deactivated"
                         >
                           <ShieldCheck className="h-4 w-4" />
                         </span>
@@ -216,8 +216,8 @@ export const MemberTable: React.FC<MemberTableProps> = ({
                           className="h-8 w-8 p-0 text-slate-400 hover:text-rose-600"
                           title={
                             member.is_active
-                              ? 'Desactivar miembro'
-                              : 'El miembro ya está inactivo'
+                              ? 'Deactivate member'
+                              : 'Member is already inactive'
                           }
                         >
                           <UserX className="h-4 w-4" />

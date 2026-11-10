@@ -152,7 +152,7 @@ export const DealsPage: React.FC = () => {
     setErrorMessage(null);
 
     try {
-      // `getStages` auto-inicializa las etapas estándar del tenant en el backend.
+      // `getStages` auto-initializes the tenant's standard stages on the backend.
       const stageList = await getStages();
 
       const [groupedResult, forecastResult, companiesResult] = await Promise.allSettled([
@@ -171,9 +171,7 @@ export const DealsPage: React.FC = () => {
         if (mode === 'initial') {
           setGroups(stageList.map(createEmptyGroup));
         }
-        setErrorMessage(
-          'No se pudieron cargar las oportunidades. Verifica la conexión con el servidor.'
-        );
+        setErrorMessage('Could not load deals. Check your connection to the server.');
       }
 
       if (forecastResult.status === 'fulfilled') {
@@ -181,8 +179,7 @@ export const DealsPage: React.FC = () => {
       } else {
         setErrorMessage(
           (previous) =>
-            previous ??
-            'El tablero se cargó, pero no se pudieron calcular las métricas del pipeline.'
+            previous ?? 'The board loaded, but pipeline metrics could not be calculated.'
         );
       }
 
@@ -190,15 +187,12 @@ export const DealsPage: React.FC = () => {
         setCompanies(companiesResult.value);
       } else {
         setErrorMessage(
-          (previous) =>
-            previous ?? 'No se pudieron cargar las empresas para el formulario de oportunidades.'
+          (previous) => previous ?? 'Could not load companies for the deal form.'
         );
       }
     } catch {
       if (requestId === requestIdRef.current) {
-        setErrorMessage(
-          'No se pudo cargar el pipeline de ventas. Verifica la conexión con el servidor.'
-        );
+        setErrorMessage('Could not load the sales pipeline. Check your connection to the server.');
       }
     } finally {
       if (requestId === requestIdRef.current) {
@@ -221,7 +215,7 @@ export const DealsPage: React.FC = () => {
       const data = await getDealForecast();
       setForecast(data);
     } catch {
-      setErrorMessage('No se pudieron actualizar las métricas del pipeline.');
+      setErrorMessage('Could not refresh pipeline metrics.');
     }
   }, []);
 
@@ -248,7 +242,7 @@ export const DealsPage: React.FC = () => {
         setGroups(snapshot);
         setErrorMessage(
           error.response?.data?.message ||
-            'No se pudo mover la oportunidad. Se restauró su etapa anterior.'
+            'Could not move the deal. Its previous stage was restored.'
         );
       } finally {
         movingDealRef.current = null;
@@ -271,7 +265,7 @@ export const DealsPage: React.FC = () => {
   const handleDeleteDeal = async (dealId: string) => {
     const deal = groups.flatMap((group) => group.deals).find((item) => item.id === dealId);
     const confirmed = window.confirm(
-      `¿Estás seguro de que deseas eliminar la oportunidad "${deal?.title ?? 'seleccionada'}"? Esta acción no se puede deshacer.`
+      `Delete the deal "${deal?.title ?? 'selected'}"? This action cannot be undone.`
     );
     if (!confirmed) return;
 
@@ -280,7 +274,7 @@ export const DealsPage: React.FC = () => {
       setGroups((currentGroups) => removeDealFromGroups(currentGroups, dealId));
       await refreshForecast();
     } catch {
-      setErrorMessage('No se pudo eliminar la oportunidad. Inténtalo de nuevo.');
+      setErrorMessage('Could not delete the deal. Try again.');
     }
   };
 
@@ -301,11 +295,10 @@ export const DealsPage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-emerald-600" />
-            <h1 className="text-xl font-bold text-slate-900">Pipeline de Ventas</h1>
+            <h1 className="text-xl font-bold text-slate-900">Sales Pipeline</h1>
           </div>
           <p className="mt-1 text-xs text-slate-500">
-            Visualiza el embudo comercial por etapas y actualiza el avance de cada oportunidad con
-            arrastrar y soltar.
+            View your sales funnel by stage and update each deal's progress with drag and drop.
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -314,13 +307,13 @@ export const DealsPage: React.FC = () => {
             size="sm"
             onClick={() => loadData('refresh')}
             disabled={isLoading || isRefreshing}
-            title="Recargar datos"
+            title="Reload data"
           >
             <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
           </Button>
           <Button variant="primary" size="md" onClick={handleOpenNew}>
             <Plus className="h-4 w-4" />
-            <span>Nueva Oportunidad</span>
+            <span>New Deal</span>
           </Button>
         </div>
       </div>
@@ -331,7 +324,7 @@ export const DealsPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setErrorMessage(null)}
-            aria-label="Cerrar aviso"
+            aria-label="Dismiss notice"
             className="ml-4 font-bold text-rose-500 hover:text-rose-700"
           >
             ✕

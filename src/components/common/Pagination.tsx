@@ -30,8 +30,8 @@ export const Pagination: React.FC<PaginationProps> = ({
     <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
       {total !== undefined && from !== undefined && to !== undefined ? (
         <p className="text-xs text-slate-500">
-          Mostrando <strong className="text-slate-700">{from}</strong>–
-          <strong className="text-slate-700">{to}</strong> de{' '}
+          Showing <strong className="text-slate-700">{from}</strong>–
+          <strong className="text-slate-700">{to}</strong> of{' '}
           <strong className="text-slate-700">{total}</strong>
         </p>
       ) : (
@@ -46,11 +46,11 @@ export const Pagination: React.FC<PaginationProps> = ({
           disabled={disabled || page <= 1}
         >
           <ChevronLeft className="w-4 h-4" />
-          <span>Anterior</span>
+          <span>Previous</span>
         </Button>
 
         <span className="text-xs text-slate-600 font-medium whitespace-nowrap">
-          Página {page} de {pages}
+          Page {page} of {pages}
         </span>
 
         <Button
@@ -59,7 +59,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           onClick={() => onPageChange(page + 1)}
           disabled={disabled || page >= pages}
         >
-          <span>Siguiente</span>
+          <span>Next</span>
           <ChevronRight className="w-4 h-4" />
         </Button>
       </div>

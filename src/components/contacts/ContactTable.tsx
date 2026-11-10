@@ -23,7 +23,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({
       <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
         <div className="p-8 text-center">
           <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
-          <p className="mt-2 text-sm text-slate-500">Cargando contactos...</p>
+          <p className="mt-2 text-sm text-slate-500">Loading contacts...</p>
         </div>
       </div>
     );
@@ -35,9 +35,9 @@ export const ContactTable: React.FC<ContactTableProps> = ({
         <div className="mx-auto w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-3">
           <User className="w-6 h-6" />
         </div>
-        <h3 className="text-sm font-semibold text-slate-800">No se encontraron contactos</h3>
+        <h3 className="text-sm font-semibold text-slate-800">No contacts found</h3>
         <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-          Comienza creando un contacto o ajusta los filtros de búsqueda y empresa.
+          Start by creating a contact, or adjust the search and company filters.
         </p>
       </div>
     );
@@ -49,12 +49,12 @@ export const ContactTable: React.FC<ContactTableProps> = ({
         <table className="w-full text-left text-sm text-slate-600">
           <thead className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-semibold uppercase tracking-wider text-slate-500">
             <tr>
-              <th className="py-3.5 px-4">Contacto</th>
-              <th className="py-3.5 px-4">Cargo / Posición</th>
-              <th className="py-3.5 px-4">Empresa</th>
+              <th className="py-3.5 px-4">Contact</th>
+              <th className="py-3.5 px-4">Title / Position</th>
+              <th className="py-3.5 px-4">Company</th>
               <th className="py-3.5 px-4">Email</th>
-              <th className="py-3.5 px-4">Teléfono</th>
-              <th className="py-3.5 px-4 text-right">Acciones</th>
+              <th className="py-3.5 px-4">Phone</th>
+              <th className="py-3.5 px-4 text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -98,7 +98,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                         {contact.company.name}
                       </span>
                     ) : (
-                      <span className="text-slate-400 text-xs italic">Sin empresa</span>
+                      <span className="text-slate-400 text-xs italic">No company</span>
                     )}
                   </td>
                   <td className="py-3.5 px-4">
@@ -132,7 +132,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                         size="sm"
                         onClick={() => onEdit(contact)}
                         className="text-slate-500 hover:text-slate-700 h-8 w-8 p-0"
-                        title="Editar contacto"
+                        title="Edit contact"
                       >
                         <Edit2 className="w-4 h-4" />
                       </Button>
@@ -141,7 +141,7 @@ export const ContactTable: React.FC<ContactTableProps> = ({
                         size="sm"
                         onClick={() => onDelete(contact)}
                         className="text-slate-400 hover:text-rose-600 h-8 w-8 p-0"
-                        title="Eliminar contacto"
+                        title="Delete contact"
                       >
                         <Trash2 className="w-4 h-4" />
                       </Button>

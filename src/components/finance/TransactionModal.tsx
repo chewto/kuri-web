@@ -73,15 +73,15 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
     const newErrors: Record<string, string> = {};
 
     if (!formData.description.trim()) {
-      newErrors.description = 'La descripción del movimiento es obligatoria.';
+      newErrors.description = 'A transaction description is required.';
     }
 
     if (!formData.amount || isNaN(Number(formData.amount)) || Number(formData.amount) <= 0) {
-      newErrors.amount = 'El monto debe ser un número decimal mayor a 0.';
+      newErrors.amount = 'The amount must be a decimal number greater than 0.';
     }
 
     if (!formData.date) {
-      newErrors.date = 'La fecha de la transacción es obligatoria.';
+      newErrors.date = 'Transaction date is required.';
     }
 
     setErrors(newErrors);
@@ -104,7 +104,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       setErrors({
-        submit: error.response?.data?.message || 'Error al guardar la transacción. Revisa los datos.',
+        submit: error.response?.data?.message || "Couldn't save the transaction. Check your details.",
       });
     } finally {
       setIsSubmitting(false);
@@ -122,10 +122,10 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-800">
-                Registrar Movimiento de Caja
+                Record Cash Transaction
               </h2>
               <p className="text-xs text-slate-500">
-                Registra un cobro de cliente o un gasto operativo
+                Record a client payment or an operating expense
               </p>
             </div>
           </div>
@@ -146,10 +146,10 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
             </div>
           )}
 
-          {/* Tipo de transacción con selector visual tipo pill */}
+          {/* Transaction type with a visual pill selector */}
           <div>
             <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
-              Tipo de Movimiento *
+              Transaction Type *
             </label>
             <div className="grid grid-cols-2 gap-3">
               <button
@@ -162,7 +162,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
                 }`}
               >
                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                Ingreso (+ Cobro)
+                Income (+ Inflow)
               </button>
               <button
                 type="button"
@@ -174,14 +174,14 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
                 }`}
               >
                 <span className="w-2 h-2 rounded-full bg-rose-500" />
-                Egreso (- Gasto)
+                Expense (- Outflow)
               </button>
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
-              label="Monto (USD) *"
+              label="Amount (USD) *"
               type="number"
               step="0.01"
               min="0.01"
@@ -198,7 +198,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
             />
 
             <Input
-              label="Fecha del Movimiento *"
+              label="Transaction Date *"
               type="date"
               value={formData.date}
               onChange={(e) =>
@@ -210,8 +210,8 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
           </div>
 
           <Input
-            label="Descripción / Concepto *"
-            placeholder="Ej: Pago factura mensual cliente Acme, Compra servidores AWS"
+            label="Description / Details *"
+            placeholder="E.g. Acme monthly invoice payment, AWS server purchase"
             value={formData.description}
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
@@ -220,11 +220,11 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
             required
           />
 
-          {/* Categoría */}
+          {/* Category */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider">
-                Categoría
+                Category
               </label>
               {onOpenCategoryManager && (
                 <button
@@ -233,7 +233,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
                   className="text-xs text-emerald-600 hover:text-emerald-700 font-semibold flex items-center gap-1"
                 >
                   <Plus className="w-3 h-3" />
-                  Gestionar Categorías
+                  Manage Categories
                 </button>
               )}
             </div>
@@ -244,7 +244,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
               }
               className="block w-full rounded-lg border border-slate-300 py-2 px-3 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
             >
-              <option value="">-- Sin categoría asignada --</option>
+              <option value="">-- No category assigned --</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
@@ -253,10 +253,10 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
             </select>
           </div>
 
-          {/* Empresa cliente o interna */}
+          {/* Client or internal company */}
           <div>
             <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-              Empresa Relacionada (Opcional)
+              Related Company (Optional)
             </label>
             <select
               value={formData.company_id || ''}
@@ -265,7 +265,7 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
               }
               className="block w-full rounded-lg border border-slate-300 py-2 px-3 text-sm text-slate-900 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
             >
-              <option value="">-- Sin empresa asociada (Interno) --</option>
+              <option value="">-- No associated company (Internal) --</option>
               {companies.map((comp) => (
                 <option key={comp.id} value={comp.id}>
                   {comp.name} {comp.tax_id ? `(${comp.tax_id})` : ''}
@@ -281,10 +281,10 @@ export const TransactionModal: React.FC<TransactionModalProps> = ({
               onClick={onClose}
               disabled={isSubmitting}
             >
-              Cancelar
+              Cancel
             </Button>
             <Button type="submit" variant="primary" isLoading={isSubmitting}>
-              Registrar Movimiento
+              Record Transaction
             </Button>
           </div>
         </form>

@@ -46,7 +46,7 @@ export const ContactDetailPage: React.FC = () => {
       setActivities(activitiesData);
       setCompanies(companiesData);
     } catch {
-      setErrorNotification('No se pudo cargar la información del contacto.');
+      setErrorNotification("Could not load the contact's information.");
     } finally {
       setIsLoading(false);
     }
@@ -73,7 +73,7 @@ export const ContactDetailPage: React.FC = () => {
     return (
       <div className="p-12 text-center">
         <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
-        <p className="mt-3 text-sm text-slate-500">Cargando expediente del contacto...</p>
+        <p className="mt-3 text-sm text-slate-500">Loading contact record...</p>
       </div>
     );
   }
@@ -81,13 +81,13 @@ export const ContactDetailPage: React.FC = () => {
   if (!contact) {
     return (
       <div className="bg-white rounded-xl border border-slate-200 p-12 text-center max-w-lg mx-auto shadow-sm">
-        <h3 className="text-base font-bold text-slate-800">Contacto no encontrado</h3>
+        <h3 className="text-base font-bold text-slate-800">Contact not found</h3>
         <p className="text-xs text-slate-500 mt-2">
-          El contacto solicitado no existe o fue eliminado de la base de datos.
+          The requested contact does not exist or was removed from the database.
         </p>
         <Button variant="primary" size="sm" onClick={() => navigate('/contacts')} className="mt-4">
           <ArrowLeft className="w-4 h-4" />
-          <span>Volver al directorio</span>
+          <span>Back to directory</span>
         </Button>
       </div>
     );
@@ -106,14 +106,14 @@ export const ContactDetailPage: React.FC = () => {
             size="sm"
             onClick={() => navigate('/contacts')}
             className="h-9 w-9 p-0"
-            title="Volver"
+            title="Back"
           >
             <ArrowLeft className="w-4 h-4 text-slate-600" />
           </Button>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-semibold uppercase tracking-wider text-emerald-600">
-                Ficha de Contacto
+                Contact Profile
               </span>
               <span className="text-slate-300">•</span>
               <span className="text-xs text-slate-400">ID: {contact.id.slice(0, 8)}...</span>
@@ -128,13 +128,13 @@ export const ContactDetailPage: React.FC = () => {
             size="sm"
             onClick={loadContactData}
             disabled={isLoading}
-            title="Recargar"
+            title="Reload"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
           <Button variant="secondary" size="sm" onClick={() => setModalOpen(true)}>
             <Edit2 className="w-4 h-4" />
-            <span>Editar Contacto</span>
+            <span>Edit Contact</span>
           </Button>
         </div>
       </div>
@@ -176,7 +176,7 @@ export const ContactDetailPage: React.FC = () => {
                 </div>
               ) : (
                 <span className="mt-3 inline-block text-[11px] text-slate-400 bg-slate-100 px-2.5 py-0.5 rounded-full">
-                  Sin empresa asignada
+                  No company assigned
                 </span>
               )}
             </div>
@@ -184,7 +184,7 @@ export const ContactDetailPage: React.FC = () => {
             {/* Contact Information List */}
             <div className="pt-6 space-y-4">
               <h4 className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
-                Datos de Comunicación
+                Contact Details
               </h4>
 
               <div className="flex items-center gap-3">
@@ -192,7 +192,7 @@ export const ContactDetailPage: React.FC = () => {
                   <Mail className="w-4 h-4" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] text-slate-400 uppercase font-semibold">Correo</p>
+                  <p className="text-[10px] text-slate-400 uppercase font-semibold">Email</p>
                   <a
                     href={`mailto:${contact.email}`}
                     className="text-xs font-medium text-emerald-600 hover:text-emerald-700 hover:underline truncate block"
@@ -207,7 +207,7 @@ export const ContactDetailPage: React.FC = () => {
                   <Phone className="w-4 h-4" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] text-slate-400 uppercase font-semibold">Teléfono</p>
+                  <p className="text-[10px] text-slate-400 uppercase font-semibold">Phone</p>
                   {contact.phone ? (
                     <a
                       href={`tel:${contact.phone}`}
@@ -216,7 +216,7 @@ export const ContactDetailPage: React.FC = () => {
                       {contact.phone}
                     </a>
                   ) : (
-                    <span className="text-xs text-slate-400 italic">No especificado</span>
+                    <span className="text-xs text-slate-400 italic">Not specified</span>
                   )}
                 </div>
               </div>
@@ -226,9 +226,9 @@ export const ContactDetailPage: React.FC = () => {
                   <Briefcase className="w-4 h-4" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] text-slate-400 uppercase font-semibold">Cargo</p>
+                  <p className="text-[10px] text-slate-400 uppercase font-semibold">Title</p>
                   <p className="text-xs font-medium text-slate-700 truncate">
-                    {contact.position || 'Sin cargo'}
+                    {contact.position || 'No title'}
                   </p>
                 </div>
               </div>
@@ -238,11 +238,11 @@ export const ContactDetailPage: React.FC = () => {
                   <Calendar className="w-4 h-4" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="text-[10px] text-slate-400 uppercase font-semibold">Fecha de Creación</p>
+                  <p className="text-[10px] text-slate-400 uppercase font-semibold">Created</p>
                   <p className="text-xs font-medium text-slate-600">
-                    {new Date(contact.created_at).toLocaleDateString('es-ES', {
-                      day: '2-digit',
+                    {new Date(contact.created_at).toLocaleDateString('en-US', {
                       month: 'long',
+                      day: 'numeric',
                       year: 'numeric',
                     })}
                   </p>

@@ -29,7 +29,7 @@ export const CompaniesPage: React.FC = () => {
         setPage(data.pages);
       }
     } catch {
-      setErrorNotification('No se pudieron cargar las empresas. Verifica la conexión con el servidor.');
+      setErrorNotification('Could not load companies. Check your connection to the server.');
     } finally {
       setIsLoading(false);
     }
@@ -62,7 +62,7 @@ export const CompaniesPage: React.FC = () => {
 
   const handleDelete = async (company: Company) => {
     const confirmed = window.confirm(
-      `¿Estás seguro de que deseas eliminar la empresa "${company.name}"? Esta acción no se puede deshacer.`
+      `Delete the company "${company.name}"? This action cannot be undone.`
     );
     if (!confirmed) return;
 
@@ -70,7 +70,7 @@ export const CompaniesPage: React.FC = () => {
       await deleteCompany(company.id);
       await fetchCompanies();
     } catch {
-      alert('Error al eliminar la empresa.');
+      alert('Could not delete the company.');
     }
   };
 
@@ -86,10 +86,10 @@ export const CompaniesPage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <Building2 className="w-5 h-5 text-emerald-600" />
-            <h1 className="text-xl font-bold text-slate-900">Directorio de Empresas</h1>
+            <h1 className="text-xl font-bold text-slate-900">Company Directory</h1>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            Administra las cuentas corporativas, sectores y datos fiscales de tus clientes B2B.
+            Manage corporate accounts, industries, and tax details for your B2B clients.
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -98,13 +98,13 @@ export const CompaniesPage: React.FC = () => {
             size="sm"
             onClick={fetchCompanies}
             disabled={isLoading}
-            title="Recargar datos"
+            title="Reload data"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
           <Button variant="primary" size="md" onClick={handleOpenNew}>
             <Plus className="w-4 h-4" />
-            <span>Nueva Empresa</span>
+            <span>New Company</span>
           </Button>
         </div>
       </div>
@@ -125,14 +125,14 @@ export const CompaniesPage: React.FC = () => {
       <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex flex-col sm:flex-row gap-3 items-center justify-between">
         <div className="w-full sm:w-80">
           <Input
-            placeholder="Buscar por nombre o sector..."
+            placeholder="Search by name or industry..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             leftIcon={<Search className="w-4 h-4" />}
           />
         </div>
         <div className="text-xs text-slate-500 self-end sm:self-center">
-          Total: <strong className="text-slate-800">{pagination.total}</strong> empresas
+          Total: <strong className="text-slate-800">{pagination.total}</strong> companies
         </div>
       </div>
 

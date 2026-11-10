@@ -31,12 +31,12 @@ const parsePeriod = (value: string): { year: number; month: number } | null => {
 };
 
 const formatPeriodLabel = (summary: ProfitabilitySummary | null): string => {
-  if (!summary) return 'Periodo actual';
+  if (!summary) return 'Current period';
 
   const date = new Date(summary.period.year, summary.period.month - 1, 1);
-  if (Number.isNaN(date.getTime())) return 'Periodo actual';
+  if (Number.isNaN(date.getTime())) return 'Current period';
 
-  return new Intl.DateTimeFormat('es-VE', {
+  return new Intl.DateTimeFormat('en-US', {
     month: 'long',
     year: 'numeric',
   }).format(date);
@@ -70,21 +70,21 @@ const PipelineStatusPanel: React.FC<PipelineStatusPanelProps> = ({
   const statuses = [
     {
       key: 'open',
-      label: 'Abiertos',
+      label: 'Open',
       data: pipeline?.open,
       bar: 'bg-sky-500',
       text: 'text-sky-700',
     },
     {
       key: 'won',
-      label: 'Ganados',
+      label: 'Won',
       data: pipeline?.won,
       bar: 'bg-emerald-500',
       text: 'text-emerald-700',
     },
     {
       key: 'lost',
-      label: 'Perdidos',
+      label: 'Lost',
       data: pipeline?.lost,
       bar: 'bg-rose-500',
       text: 'text-rose-700',
@@ -98,9 +98,9 @@ const PipelineStatusPanel: React.FC<PipelineStatusPanelProps> = ({
     <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-sm font-bold text-slate-900">Estado del Pipeline</h2>
+          <h2 className="text-sm font-bold text-slate-900">Pipeline Status</h2>
           <p className="mt-0.5 text-xs text-slate-500">
-            Distribución de oportunidades del tenant
+            Opportunity distribution across the workspace
           </p>
         </div>
         <div className="rounded-xl bg-slate-100 p-2.5 text-slate-600">
@@ -113,9 +113,9 @@ const PipelineStatusPanel: React.FC<PipelineStatusPanelProps> = ({
           <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400">
             <BarChart3 className="h-6 w-6" />
           </div>
-          <p className="text-sm font-semibold text-slate-700">Sin oportunidades registradas</p>
+          <p className="text-sm font-semibold text-slate-700">No opportunities recorded</p>
           <p className="mt-1 max-w-xs text-xs text-slate-500">
-            Crea deals en el módulo comercial para visualizar la distribución del embudo.
+            Create deals in the sales module to view the funnel distribution.
           </p>
         </div>
       ) : (
@@ -151,7 +151,7 @@ const PipelineStatusPanel: React.FC<PipelineStatusPanelProps> = ({
 
           <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 text-xs">
             <span className="text-slate-500">
-              Total: <strong className="text-slate-800">{totalCount}</strong> oportunidades
+              Total: <strong className="text-slate-800">{totalCount}</strong> opportunities
             </span>
             <span className="font-semibold text-slate-800">
               {formatCurrency(totalValue)}
@@ -184,7 +184,7 @@ export const AnalyticsPage: React.FC = () => {
       setSummary(data);
     } catch {
       setErrorNotification(
-        'No se pudo cargar la analítica de rentabilidad. Verifica la conexión con el servidor.'
+        "Couldn't load profitability analytics. Check the server connection."
       );
     } finally {
       setIsLoading(false);
@@ -202,15 +202,14 @@ export const AnalyticsPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <BarChart3 className="h-5 w-5 text-emerald-600" />
             <h1 className="text-xl font-bold text-slate-900">
-              Analítica & Rentabilidad
+              Analytics & Profitability
             </h1>
           </div>
           <p className="mt-1 text-xs text-slate-500">
-            Ingresos por ventas, OPEX consolidado, margen neto real y salud del pipeline
-            comercial.
+            Sales revenue, consolidated OPEX, actual net margin, and sales pipeline health.
           </p>
           <p className="mt-1 text-[11px] font-medium capitalize text-slate-400">
-            {formatPeriodLabel(summary)} · {summary?.period.start_date || '—'} al{' '}
+            {formatPeriodLabel(summary)} · {summary?.period.start_date || '—'} to{' '}
             {summary?.period.end_date || '—'}
           </p>
         </div>
@@ -219,7 +218,7 @@ export const AnalyticsPage: React.FC = () => {
           <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm">
             <Calendar className="h-4 w-4 text-slate-400" />
             <label htmlFor="analytics-period" className="text-xs font-medium text-slate-600">
-              Periodo
+              Period
             </label>
             <input
               id="analytics-period"
@@ -236,7 +235,7 @@ export const AnalyticsPage: React.FC = () => {
             size="sm"
             onClick={() => void fetchSummary()}
             disabled={isLoading}
-            title="Recargar analítica"
+            title="Refresh analytics"
           >
             <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
@@ -250,7 +249,7 @@ export const AnalyticsPage: React.FC = () => {
             type="button"
             onClick={() => setErrorNotification(null)}
             className="ml-4 font-bold text-rose-500 hover:text-rose-700"
-            aria-label="Cerrar notificación"
+            aria-label="Close notification"
           >
             ✕
           </button>
@@ -271,8 +270,8 @@ export const AnalyticsPage: React.FC = () => {
       </div>
 
       <div className="rounded-2xl border border-slate-200 bg-white p-4 text-center text-[11px] text-slate-400 shadow-sm">
-        Cálculos basados en tratos ganados, suscripciones activas y transacciones del
-        periodo en tu organización.
+        Calculations based on won deals, active subscriptions, and transactions in the
+        period for your organization.
       </div>
     </div>
   );

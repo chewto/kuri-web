@@ -46,15 +46,15 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
     const email = formData.email.trim().toLowerCase();
 
     if (!email) {
-      newErrors.email = 'El correo electrónico es obligatorio.';
+      newErrors.email = 'Email is required.';
     } else if (!EMAIL_REGEX.test(email)) {
-      newErrors.email = 'Ingresa un formato de correo válido.';
+      newErrors.email = 'Enter a valid email address.';
     }
 
     if (!formData.password) {
-      newErrors.password = 'La contraseña es obligatoria.';
+      newErrors.password = 'Password is required.';
     } else if (formData.password.length < 6) {
-      newErrors.password = 'La contraseña debe tener al menos 6 caracteres.';
+      newErrors.password = 'Password must be at least 6 characters.';
     }
 
     setErrors(newErrors);
@@ -77,7 +77,7 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
       setErrors({
         submit:
           apiError.response?.data?.message ||
-          'No se pudo invitar al miembro. Revisa los datos e inténtalo de nuevo.',
+          'Could not invite the member. Check the details and try again.',
       });
     } finally {
       setIsSubmitting(false);
@@ -93,9 +93,9 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
               <UserPlus className="h-4 w-4" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-slate-800">Invitar Miembro</h2>
+              <h2 className="text-base font-bold text-slate-800">Invite member</h2>
               <p className="text-xs text-slate-500">
-                Crea el acceso de un nuevo integrante del equipo
+                Create access for a new team member
               </p>
             </div>
           </div>
@@ -103,7 +103,7 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
             type="button"
             onClick={onClose}
             className="rounded-lg p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
-            aria-label="Cerrar modal"
+            aria-label="Close modal"
           >
             <X className="h-5 w-5" />
           </button>
@@ -117,13 +117,13 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
           )}
 
           <Input
-            label="Correo Electrónico *"
+            label="Email address *"
             type="email"
             value={formData.email}
             onChange={(event) =>
               setFormData((prev) => ({ ...prev, email: event.target.value }))
             }
-            placeholder="nuevo.miembro@empresa.com"
+            placeholder="new.member@company.com"
             error={errors.email}
             leftIcon={<Mail className="h-4 w-4" />}
             autoComplete="email"
@@ -131,15 +131,15 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
           />
 
           <Input
-            label="Contraseña Inicial *"
+            label="Initial password *"
             type="password"
             value={formData.password}
             onChange={(event) =>
               setFormData((prev) => ({ ...prev, password: event.target.value }))
             }
-            placeholder="Mínimo 6 caracteres"
+            placeholder="Minimum 6 characters"
             error={errors.password}
-            helperText="El miembro usará este correo y contraseña para iniciar sesión."
+            helperText="The member will use this email and password to sign in."
             leftIcon={<KeyRound className="h-4 w-4" />}
             autoComplete="new-password"
             required
@@ -150,7 +150,7 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
               htmlFor="invite-member-role"
               className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-700"
             >
-              Rol inicial *
+              Initial role *
             </label>
             <select
               id="invite-member-role"
@@ -173,17 +173,17 @@ export const InviteMemberModal: React.FC<InviteMemberModalProps> = ({
 
           <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
             <p className="text-[11px] leading-relaxed text-slate-500">
-              El backend registra la cuenta inmediatamente; no se envía un correo de
-              invitación. Comparte las credenciales iniciales con el nuevo miembro.
+              The backend creates the account immediately; no invitation email is sent.
+              Share the initial credentials with the new member.
             </p>
           </div>
 
           <div className="flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
             <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
-              Cancelar
+              Cancel
             </Button>
             <Button type="submit" variant="primary" isLoading={isSubmitting}>
-              Invitar Miembro
+              Invite member
             </Button>
           </div>
         </form>

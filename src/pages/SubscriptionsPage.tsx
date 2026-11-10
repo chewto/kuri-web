@@ -33,12 +33,12 @@ export const SubscriptionsPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [errorNotification, setErrorNotification] = useState<string | null>(null);
 
-  // Filtros
+  // Filters
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<SubscriptionStatus | ''>('');
   const [categoryFilter, setCategoryFilter] = useState<string>('');
 
-  // Modales
+  // Modals
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedSubscription, setSelectedSubscription] = useState<Subscription | null>(null);
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
@@ -54,7 +54,7 @@ export const SubscriptionsPage: React.FC = () => {
       setSubscriptions(data);
     } catch {
       setErrorNotification(
-        'No se pudieron cargar las suscripciones. Verifica la conexión con el servidor.'
+        "Couldn't load subscriptions. Check the server connection."
       );
     } finally {
       setIsLoading(false);
@@ -66,7 +66,7 @@ export const SubscriptionsPage: React.FC = () => {
       const data = await getCategories();
       setCategories(data);
     } catch {
-      // Ignorar error de categorA-as secundarias
+      // Ignore secondary category error
     }
   }, []);
 
@@ -94,7 +94,7 @@ export const SubscriptionsPage: React.FC = () => {
 
   const handleDelete = async (sub: Subscription) => {
     const confirmed = window.confirm(
-      `¿Estás seguro de que deseas eliminar la suscripción "${sub.name}"?`
+      `Are you sure you want to delete the subscription "${sub.name}"?`
     );
     if (!confirmed) return;
 
@@ -102,7 +102,7 @@ export const SubscriptionsPage: React.FC = () => {
       await deleteSubscription(sub.id);
       await fetchSubscriptions();
     } catch {
-      alert('Error al eliminar la suscripción.');
+      alert("Couldn't delete the subscription.");
     }
   };
 
@@ -113,7 +113,7 @@ export const SubscriptionsPage: React.FC = () => {
       await updateSubscription(sub.id, { status: nextStatus });
       await fetchSubscriptions();
     } catch {
-      alert('Error al actualizar el estado de la suscripción.');
+      alert("Couldn't update the subscription status.");
     }
   };
 
@@ -122,7 +122,7 @@ export const SubscriptionsPage: React.FC = () => {
     setModalOpen(true);
   };
 
-  // Filtrado local por término de búsqueda (nombre o empresa)
+  // Local filtering by search term (name or company)
   const filteredSubscriptions = subscriptions.filter((sub) => {
     if (!searchTerm.trim()) return true;
     const term = searchTerm.toLowerCase();
@@ -132,7 +132,7 @@ export const SubscriptionsPage: React.FC = () => {
     );
   });
 
-  // Cálculo de MRR total en suscripciones activas
+  // Calculate total MRR for active subscriptions
   const totalActiveMRR = filteredSubscriptions
     .filter((s) => s.status === 'active')
     .reduce((acc, curr) => {
@@ -150,11 +150,11 @@ export const SubscriptionsPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <Repeat className="w-5 h-5 text-emerald-600" />
             <h1 className="text-xl font-bold text-slate-900">
-              Suscripciones & SaaS (OPEX)
+              Subscriptions & SaaS (OPEX)
             </h1>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            Administra software, infraestructura en la nube y licencias periódicas por cliente u organización.
+            Manage software, cloud infrastructure, and recurring licenses by client or organization.
           </p>
         </div>
 
@@ -164,7 +164,7 @@ export const SubscriptionsPage: React.FC = () => {
             size="sm"
             onClick={fetchSubscriptions}
             disabled={isLoading}
-            title="Recargar datos"
+            title="Refresh data"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
@@ -174,11 +174,11 @@ export const SubscriptionsPage: React.FC = () => {
             onClick={() => setCategoryModalOpen(true)}
           >
             <Tag className="w-4 h-4 text-slate-500" />
-            <span>Categorías</span>
+            <span>Categories</span>
           </Button>
           <Button variant="primary" size="md" onClick={handleOpenNew}>
             <Plus className="w-4 h-4" />
-            <span>Nueva Suscripción</span>
+            <span>New Subscription</span>
           </Button>
         </div>
       </div>
@@ -202,7 +202,7 @@ export const SubscriptionsPage: React.FC = () => {
           {/* Search */}
           <div className="w-full sm:w-64">
             <Input
-              placeholder="Buscar herramienta o cliente..."
+              placeholder="Search tools or clients..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               leftIcon={<Search className="w-4 h-4" />}
@@ -219,10 +219,10 @@ export const SubscriptionsPage: React.FC = () => {
               }
               className="w-full sm:w-auto rounded-lg border border-slate-300 py-2 px-3 text-xs text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
             >
-              <option value="">Todos los Estados</option>
-              <option value="active">Activas</option>
-              <option value="paused">Pausadas</option>
-              <option value="cancelled">Canceladas</option>
+              <option value="">All statuses</option>
+              <option value="active">Active</option>
+              <option value="paused">Paused</option>
+              <option value="cancelled">Canceled</option>
             </select>
           </div>
 
@@ -233,7 +233,7 @@ export const SubscriptionsPage: React.FC = () => {
               onChange={(e) => setCategoryFilter(e.target.value)}
               className="w-full rounded-lg border border-slate-300 py-2 px-3 text-xs text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
             >
-              <option value="">Todas las Categorías</option>
+              <option value="">All categories</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
@@ -243,31 +243,31 @@ export const SubscriptionsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Resumen rápido de MRR filtrado */}
+        {/* Quick summary of filtered MRR */}
         <div className="flex items-center gap-3 self-end md:self-auto text-xs bg-slate-50 px-3 py-2 rounded-xl border border-slate-100">
           <span className="text-slate-500">
             Total:{' '}
             <strong className="text-slate-800">
               {filteredSubscriptions.length}
             </strong>{' '}
-            servicios
+            services
           </span>
           <span className="text-slate-300">|</span>
           <span className="text-slate-500 flex items-center gap-1">
             <DollarSign className="w-3.5 h-3.5 text-emerald-600" />
-            MRR Activo:{' '}
+            Active MRR:{' '}
             <strong className="text-emerald-700">
-              ${totalActiveMRR.toFixed(2)}/mes
+              ${totalActiveMRR.toFixed(2)}/mo
             </strong>
           </span>
         </div>
       </div>
 
-      {/* Grid de Suscripciones */}
+      {/* Subscriptions grid */}
       {isLoading ? (
         <div className="p-16 bg-white rounded-2xl border border-slate-200 text-center text-slate-400">
           <div className="animate-spin w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full mx-auto mb-3" />
-          <p className="text-xs font-medium">Cargando suscripciones SaaS...</p>
+          <p className="text-xs font-medium">Loading SaaS subscriptions...</p>
         </div>
       ) : filteredSubscriptions.length === 0 ? (
         <div className="p-16 bg-white rounded-2xl border border-slate-200 text-center">
@@ -275,17 +275,17 @@ export const SubscriptionsPage: React.FC = () => {
             <Repeat className="w-6 h-6" />
           </div>
           <h3 className="text-sm font-bold text-slate-800">
-            No se encontraron suscripciones
+            No subscriptions found
           </h3>
           <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
             {searchTerm || statusFilter || categoryFilter
-              ? 'Prueba a cambiar o limpiar los filtros seleccionados.'
-              : 'Añade tu primera herramienta de software para auditar los costes recurrentes.'}
+              ? 'Try changing or clearing the selected filters.'
+              : 'Add your first software tool to audit recurring costs.'}
           </p>
           <div className="mt-4">
             <Button variant="primary" size="sm" onClick={handleOpenNew}>
               <Plus className="w-4 h-4" />
-              <span>Registrar Primera Suscripción</span>
+              <span>Add Your First Subscription</span>
             </Button>
           </div>
         </div>
@@ -303,7 +303,7 @@ export const SubscriptionsPage: React.FC = () => {
         </div>
       )}
 
-      {/* Modal Crear/Editar Suscripción */}
+      {/* Create/Edit Subscription Modal */}
       <SubscriptionModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
@@ -314,7 +314,7 @@ export const SubscriptionsPage: React.FC = () => {
         onRefreshCategories={fetchCategories}
       />
 
-      {/* Modal Categorías */}
+      {/* Categories Modal */}
       <CategoryManagerModal
         isOpen={categoryModalOpen}
         onClose={() => {

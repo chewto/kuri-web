@@ -32,7 +32,7 @@ export const TransactionsPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [errorNotification, setErrorNotification] = useState<string | null>(null);
 
-  // Paginación y Filtros
+  // Pagination and Filters
   const [page, setPage] = useState(1);
   const [pagination, setPagination] = useState({ total: 0, pages: 1, per_page: 20 });
   const [typeFilter, setTypeFilter] = useState<TransactionType | ''>('');
@@ -40,7 +40,7 @@ export const TransactionsPage: React.FC = () => {
   const [startDate, setStartDate] = useState<string>('');
   const [endDate, setEndDate] = useState<string>('');
 
-  // Modales
+  // Modals
   const [modalOpen, setModalOpen] = useState(false);
   const [defaultModalType, setDefaultModalType] = useState<TransactionType>('income');
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
@@ -68,7 +68,7 @@ export const TransactionsPage: React.FC = () => {
       }
     } catch {
       setErrorNotification(
-        'No se pudieron cargar las transacciones. Verifica la conexión con el servidor.'
+        "Couldn't load transactions. Check the server connection."
       );
     } finally {
       setIsLoading(false);
@@ -80,7 +80,7 @@ export const TransactionsPage: React.FC = () => {
       const data = await getCategories();
       setCategories(data);
     } catch {
-      // Ignorar error de categorA-as
+      // Ignore category error
     }
   }, []);
 
@@ -103,7 +103,7 @@ export const TransactionsPage: React.FC = () => {
 
   const handleDelete = async (tx: Transaction) => {
     const confirmed = window.confirm(
-      `¿Estás seguro de que deseas eliminar el movimiento "${tx.description}"?`
+      `Are you sure you want to delete the transaction "${tx.description}"?`
     );
     if (!confirmed) return;
 
@@ -111,7 +111,7 @@ export const TransactionsPage: React.FC = () => {
       await deleteTransaction(tx.id);
       await fetchTransactions();
     } catch {
-      alert('Error al eliminar la transacción.');
+      alert("Couldn't delete the transaction.");
     }
   };
 
@@ -125,7 +125,7 @@ export const TransactionsPage: React.FC = () => {
     setModalOpen(true);
   };
 
-  // Cálculo de subtotales de la lista cargada
+  // Compute subtotals for the loaded list
   const currentIncomeTotal = transactions
     .filter((t) => t.type === 'income')
     .reduce((acc, curr) => acc + curr.amount, 0);
@@ -142,11 +142,11 @@ export const TransactionsPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <CreditCard className="w-5 h-5 text-emerald-600" />
             <h1 className="text-xl font-bold text-slate-900">
-              Transacciones & Movimientos de Caja
+              Transactions & Cash Flow
             </h1>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            Registro detallado y conciliación de ingresos por ventas y salidas operativas.
+            Detailed record and reconciliation of sales revenue and operating expenses.
           </p>
         </div>
 
@@ -156,7 +156,7 @@ export const TransactionsPage: React.FC = () => {
             size="sm"
             onClick={fetchTransactions}
             disabled={isLoading}
-            title="Recargar datos"
+            title="Refresh data"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
@@ -166,7 +166,7 @@ export const TransactionsPage: React.FC = () => {
             onClick={() => setCategoryModalOpen(true)}
           >
             <Tag className="w-4 h-4 text-slate-500" />
-            <span>Categorías</span>
+            <span>Categories</span>
           </Button>
           <Button
             variant="outline"
@@ -175,11 +175,11 @@ export const TransactionsPage: React.FC = () => {
             className="border-rose-200 text-rose-700 hover:bg-rose-50"
           >
             <TrendingDown className="w-4 h-4 text-rose-600" />
-            <span>Registrar Gasto</span>
+            <span>Record Expense</span>
           </Button>
           <Button variant="primary" size="md" onClick={handleOpenNewIncome}>
             <Plus className="w-4 h-4" />
-            <span>Registrar Ingreso</span>
+            <span>Record Income</span>
           </Button>
         </div>
       </div>
@@ -210,9 +210,9 @@ export const TransactionsPage: React.FC = () => {
               }
               className="rounded-lg border border-slate-300 py-2 px-3 text-xs text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
             >
-              <option value="">Todos los Tipos</option>
-              <option value="income">Solo Ingresos (+)</option>
-              <option value="expense">Solo Egresos (-)</option>
+              <option value="">All types</option>
+              <option value="income">Income only (+)</option>
+              <option value="expense">Expenses only (-)</option>
             </select>
           </div>
 
@@ -223,7 +223,7 @@ export const TransactionsPage: React.FC = () => {
               onChange={(e) => setCategoryFilter(e.target.value)}
               className="rounded-lg border border-slate-300 py-2 px-3 text-xs text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
             >
-              <option value="">Todas las Categorías</option>
+              <option value="">All categories</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
@@ -234,14 +234,14 @@ export const TransactionsPage: React.FC = () => {
 
           {/* Date range */}
           <div className="flex items-center gap-2 text-xs text-slate-500">
-            <span>Desde:</span>
+            <span>From:</span>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
               className="rounded-lg border border-slate-300 py-1.5 px-2 text-xs text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
             />
-            <span>Hasta:</span>
+            <span>To:</span>
             <input
               type="date"
               value={endDate}
@@ -261,12 +261,12 @@ export const TransactionsPage: React.FC = () => {
               }}
               className="text-xs text-slate-500 hover:text-slate-800 underline font-medium"
             >
-              Limpiar filtros
+              Clear filters
             </button>
           )}
         </div>
 
-        {/* Resumen de página */}
+        {/* Page summary */}
         <div className="flex items-center gap-3 self-end lg:self-auto text-xs bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-100">
           <span className="text-slate-500 flex items-center gap-1">
             <TrendingUp className="w-3.5 h-3.5 text-emerald-600" />
@@ -285,14 +285,14 @@ export const TransactionsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Tabla */}
+      {/* Table */}
       <TransactionTable
         transactions={transactions}
         isLoading={isLoading}
         onDelete={handleDelete}
       />
 
-      {/* Paginación */}
+      {/* Pagination */}
       <Pagination
         page={page}
         pages={pagination.pages}
@@ -302,7 +302,7 @@ export const TransactionsPage: React.FC = () => {
         disabled={isLoading}
       />
 
-      {/* Modal Nueva Transacción */}
+      {/* New Transaction Modal */}
       <TransactionModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
@@ -313,7 +313,7 @@ export const TransactionsPage: React.FC = () => {
         onRefreshCategories={fetchCategories}
       />
 
-      {/* Modal Categorías */}
+      {/* Categories Modal */}
       <CategoryManagerModal
         isOpen={categoryModalOpen}
         onClose={() => {

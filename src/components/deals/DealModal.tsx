@@ -67,7 +67,7 @@ export const DealModal: React.FC<DealModalProps> = ({
   const titleInputRef = useRef<HTMLInputElement>(null);
   const previousActiveElementRef = useRef<HTMLElement | null>(null);
 
-  // Reinicia el formulario cada vez que se abre el modal.
+  // Reset the form every time the modal opens.
   useEffect(() => {
     if (!isOpen) return;
 
@@ -76,12 +76,12 @@ export const DealModal: React.FC<DealModalProps> = ({
     setContactError(null);
     setErrors({});
     setIsSubmitting(false);
-    // `stages` solo se usa para el valor inicial al abrir; no debe resetear el
-    // formulario si el tablero se refresca con el modal abierto.
+    // `stages` is only used for the initial value when opening; it must not reset
+    // the form if the board refreshes while the modal is open.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, initialData]);
 
-  // Asegura una etapa por defecto si las etapas llegan después de abrir.
+  // Ensure a default stage if the stages arrive after the modal opens.
   useEffect(() => {
     if (!isOpen) return;
     setFormData((prev) =>
@@ -89,7 +89,7 @@ export const DealModal: React.FC<DealModalProps> = ({
     );
   }, [isOpen, stages]);
 
-  // Carga los contactos de la empresa seleccionada.
+  // Load the selected company's contacts.
   useEffect(() => {
     if (!isOpen || !formData.company_id) {
       setContacts([]);
@@ -109,7 +109,7 @@ export const DealModal: React.FC<DealModalProps> = ({
       .catch(() => {
         if (!cancelled) {
           setContacts([]);
-          setContactError('No se pudieron cargar los contactos de esta empresa.');
+          setContactError("Could not load this company's contacts.");
         }
       })
       .finally(() => {
@@ -121,7 +121,7 @@ export const DealModal: React.FC<DealModalProps> = ({
     };
   }, [isOpen, formData.company_id]);
 
-  // Bloquea el scroll del documento y gestiona el foco al abrir/cerrar.
+  // Lock document scroll and manage focus when opening and closing.
   useEffect(() => {
     if (!isOpen) return;
 
@@ -140,7 +140,7 @@ export const DealModal: React.FC<DealModalProps> = ({
     };
   }, [isOpen]);
 
-  // Escape para cerrar y trampa de tabulación dentro del diálogo.
+  // Escape to close and a tab trap inside the dialog.
   useEffect(() => {
     if (!isOpen) return;
 
@@ -183,7 +183,7 @@ export const DealModal: React.FC<DealModalProps> = ({
     formData.contact_id && !contacts.some((contact) => contact.id === formData.contact_id)
       ? {
           id: formData.contact_id,
-          label: initialData?.contact_name || 'Contacto actual',
+          label: initialData?.contact_name || 'Current contact',
         }
       : null;
 
@@ -192,29 +192,29 @@ export const DealModal: React.FC<DealModalProps> = ({
     const title = formData.title.trim();
 
     if (!title) {
-      newErrors.title = 'El título de la oportunidad es obligatorio';
+      newErrors.title = 'Deal title is required';
     } else if (title.length > 120) {
-      newErrors.title = 'El título no puede superar los 120 caracteres';
+      newErrors.title = 'Title cannot exceed 120 characters';
     }
 
     if (!formData.company_id) {
-      newErrors.company_id = 'Selecciona una empresa';
+      newErrors.company_id = 'Select a company';
     }
 
     if (!formData.stage_id) {
-      newErrors.stage_id = 'Selecciona una etapa';
+      newErrors.stage_id = 'Select a stage';
     }
 
     const numericValue = Number(formData.value);
     if (formData.value.trim() === '' || !Number.isFinite(numericValue) || numericValue < 0) {
-      newErrors.value = 'Ingresa un valor numérico mayor o igual a 0';
+      newErrors.value = 'Enter a numeric value greater than or equal to 0';
     }
 
     if (
       formData.expected_close_date &&
       !/^\d{4}-\d{2}-\d{2}$/.test(formData.expected_close_date)
     ) {
-      newErrors.expected_close_date = 'Ingresa una fecha de cierre válida';
+      newErrors.expected_close_date = 'Enter a valid expected close date';
     }
 
     setErrors(newErrors);
@@ -243,7 +243,7 @@ export const DealModal: React.FC<DealModalProps> = ({
       setErrors({
         submit:
           error.response?.data?.message ||
-          'Error al guardar la oportunidad. Revisa los datos e inténtalo de nuevo.',
+          'Could not save the deal. Check your information and try again.',
       });
     } finally {
       setIsSubmitting(false);
@@ -275,18 +275,18 @@ export const DealModal: React.FC<DealModalProps> = ({
             </div>
             <div>
               <h2 id="deal-modal-title" className="text-base font-bold text-slate-800">
-                {initialData ? 'Editar Oportunidad' : 'Nueva Oportunidad'}
+                {initialData ? 'Edit Deal' : 'New Deal'}
               </h2>
               <p id="deal-modal-description" className="text-xs text-slate-500">
                 {initialData
-                  ? 'Actualiza los datos comerciales del trato'
-                  : 'Registra una nueva oportunidad en el pipeline de ventas'}
+                  ? "Update the deal's sales details"
+                  : 'Add a new deal to the sales pipeline'}
               </p>
             </div>
           </div>
           <button
             type="button"
-            aria-label="Cerrar modal"
+            aria-label="Close modal"
             onClick={onClose}
             disabled={isSubmitting}
             className="rounded-lg p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 disabled:cursor-not-allowed disabled:opacity-50"
@@ -307,10 +307,9 @@ export const DealModal: React.FC<DealModalProps> = ({
             <div className="flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800">
               <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
               <span>
-                No hay empresas registradas. Crea una empresa primero para poder asociar la
-                oportunidad.{' '}
+                No companies registered. Create a company first to associate it with the deal.{' '}
                 <Link to="/companies" onClick={onClose} className="font-semibold underline">
-                  Ir a Empresas
+                  Go to Companies
                 </Link>
               </span>
             </div>
@@ -319,12 +318,12 @@ export const DealModal: React.FC<DealModalProps> = ({
           <Input
             ref={titleInputRef}
             name="title"
-            label="Título de la oportunidad *"
+            label="Deal title *"
             value={formData.title}
             onChange={(event) =>
               setFormData((prev) => ({ ...prev, title: event.target.value }))
             }
-            placeholder="Ej: Implementación CRM Enterprise"
+            placeholder="Enterprise CRM Implementation"
             maxLength={120}
             error={errors.title}
             required
@@ -333,7 +332,7 @@ export const DealModal: React.FC<DealModalProps> = ({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Input
               name="value"
-              label="Valor ($) *"
+              label="Value ($) *"
               type="number"
               min={0}
               step="0.01"
@@ -352,7 +351,7 @@ export const DealModal: React.FC<DealModalProps> = ({
                 htmlFor="deal-company"
                 className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-700"
               >
-                Empresa asociada *
+                Associated company *
               </label>
               <select
                 id="deal-company"
@@ -370,7 +369,7 @@ export const DealModal: React.FC<DealModalProps> = ({
                 required
               >
                 <option value="">
-                  {companies.length === 0 ? 'Sin empresas registradas' : 'Selecciona una empresa'}
+                  {companies.length === 0 ? 'No companies registered' : 'Select a company'}
                 </option>
                 {companies.map((company) => (
                   <option key={company.id} value={company.id}>
@@ -390,7 +389,7 @@ export const DealModal: React.FC<DealModalProps> = ({
                 htmlFor="deal-contact"
                 className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-700"
               >
-                Contacto asociado
+                Associated contact
               </label>
               <select
                 id="deal-contact"
@@ -403,12 +402,12 @@ export const DealModal: React.FC<DealModalProps> = ({
               >
                 <option value="">
                   {!formData.company_id
-                    ? 'Selecciona una empresa primero'
+                    ? 'Select a company first'
                     : isLoadingContacts
-                      ? 'Cargando contactos...'
+                      ? 'Loading contacts...'
                       : contacts.length === 0
-                        ? 'Sin contactos registrados'
-                        : 'Sin contacto asignado'}
+                        ? 'No contacts registered'
+                        : 'No contact assigned'}
                 </option>
                 {selectedContactFallback && (
                   <option value={selectedContactFallback.id}>{selectedContactFallback.label}</option>
@@ -423,7 +422,7 @@ export const DealModal: React.FC<DealModalProps> = ({
                 <p className="mt-1.5 text-xs font-medium text-rose-600">{contactError}</p>
               ) : (
                 <p className="mt-1.5 text-xs text-slate-500">
-                  Opcional. Se muestran los contactos de la empresa seleccionada.
+                  Optional. Shows contacts from the selected company.
                 </p>
               )}
             </div>
@@ -433,7 +432,7 @@ export const DealModal: React.FC<DealModalProps> = ({
                 htmlFor="deal-stage"
                 className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-700"
               >
-                {initialData ? 'Etapa' : 'Etapa inicial'} *
+                {initialData ? 'Stage' : 'Initial stage'} *
               </label>
               <select
                 id="deal-stage"
@@ -447,7 +446,7 @@ export const DealModal: React.FC<DealModalProps> = ({
                 required
               >
                 <option value="">
-                  {stages.length === 0 ? 'Sin etapas configuradas' : 'Selecciona una etapa'}
+                  {stages.length === 0 ? 'No stages configured' : 'Select a stage'}
                 </option>
                 {stages.map((stage) => (
                   <option key={stage.id} value={stage.id}>
@@ -464,7 +463,7 @@ export const DealModal: React.FC<DealModalProps> = ({
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Input
               name="expected_close_date"
-              label="Fecha prevista de cierre"
+              label="Expected close date"
               type="date"
               value={formData.expected_close_date}
               onChange={(event) =>
@@ -478,7 +477,7 @@ export const DealModal: React.FC<DealModalProps> = ({
                 htmlFor="deal-status"
                 className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-700"
               >
-                Estado
+                Status
               </label>
               <select
                 id="deal-status"
@@ -491,22 +490,22 @@ export const DealModal: React.FC<DealModalProps> = ({
                 }
                 className={selectClassName}
               >
-                <option value="open">Abierto</option>
-                <option value="won">Ganado</option>
-                <option value="lost">Perdido</option>
+                <option value="open">Open</option>
+                <option value="won">Won</option>
+                <option value="lost">Lost</option>
               </select>
               <p className="mt-1.5 text-xs text-slate-500">
-                Al arrastrar en el tablero, el estado se ajusta según la etapa.
+                Dragging cards on the board updates the status to match the stage.
               </p>
             </div>
           </div>
 
           <div className="flex items-center justify-end gap-3 border-t border-slate-100 pt-4">
             <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
-              Cancelar
+              Cancel
             </Button>
             <Button type="submit" variant="primary" isLoading={isSubmitting}>
-              {initialData ? 'Actualizar Oportunidad' : 'Crear Oportunidad'}
+              {initialData ? 'Save changes' : 'Create Deal'}
             </Button>
           </div>
         </form>

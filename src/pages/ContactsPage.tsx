@@ -47,7 +47,7 @@ export const ContactsPage: React.FC = () => {
         setPage(contactsData.pages);
       }
     } catch {
-      setErrorNotification('No se pudieron cargar los contactos. Verifica la conexión con el servidor.');
+      setErrorNotification('Could not load contacts. Check your connection to the server.');
     } finally {
       setIsLoading(false);
     }
@@ -81,7 +81,7 @@ export const ContactsPage: React.FC = () => {
   const handleDelete = async (contact: Contact) => {
     const fullName = `${contact.first_name} ${contact.last_name ?? ''}`.trim();
     const confirmed = window.confirm(
-      `¿Deseas eliminar el contacto "${fullName}"? Esta acción no se puede deshacer.`
+      `Delete the contact "${fullName}"? This action cannot be undone.`
     );
     if (!confirmed) return;
 
@@ -89,7 +89,7 @@ export const ContactsPage: React.FC = () => {
       await deleteContact(contact.id);
       await loadData();
     } catch {
-      alert('Error al eliminar el contacto.');
+      alert('Could not delete the contact.');
     }
   };
 
@@ -109,10 +109,11 @@ export const ContactsPage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <Users className="w-5 h-5 text-emerald-600" />
-            <h1 className="text-xl font-bold text-slate-900">Directorio de Contactos</h1>
+            <h1 className="text-xl font-bold text-slate-900">Contact Directory</h1>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            Gestiona interlocutores, decisores de compra y mantén el historial de relación B2B.
+            Manage stakeholders and buying decision-makers while keeping your B2B relationship
+            history in one place.
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -121,13 +122,13 @@ export const ContactsPage: React.FC = () => {
             size="sm"
             onClick={loadData}
             disabled={isLoading}
-            title="Recargar datos"
+            title="Reload data"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
           <Button variant="primary" size="md" onClick={handleOpenNew}>
             <Plus className="w-4 h-4" />
-            <span>Nuevo Contacto</span>
+            <span>New Contact</span>
           </Button>
         </div>
       </div>
@@ -149,7 +150,7 @@ export const ContactsPage: React.FC = () => {
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto flex-1">
           <div className="w-full sm:w-80">
             <Input
-              placeholder="Buscar por nombre, email o cargo..."
+              placeholder="Search by name, email, or title..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               leftIcon={<Search className="w-4 h-4" />}
@@ -165,7 +166,7 @@ export const ContactsPage: React.FC = () => {
               onChange={(e) => setSelectedCompanyId(e.target.value)}
               className="block w-full pl-9 pr-3 py-2 rounded-lg border border-slate-300 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600/20 focus:border-emerald-600"
             >
-              <option value="">Todas las empresas</option>
+              <option value="">All companies</option>
               {companies.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name}
@@ -176,7 +177,7 @@ export const ContactsPage: React.FC = () => {
         </div>
 
         <div className="text-xs text-slate-500 self-end sm:self-center">
-          Total: <strong className="text-slate-800">{pagination.total}</strong> contactos
+          Total: <strong className="text-slate-800">{pagination.total}</strong> contacts
         </div>
       </div>
 

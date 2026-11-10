@@ -58,9 +58,9 @@ export const ExpenseBreakdownChart: React.FC<ExpenseBreakdownChartProps> = ({
     <div className="flex h-full flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-sm font-bold text-slate-900">Distribución de Gastos</h2>
+          <h2 className="text-sm font-bold text-slate-900">Expense Breakdown</h2>
           <p className="mt-0.5 text-xs text-slate-500">
-            OPEX por categoría en el periodo seleccionado
+            OPEX by category for the selected period
           </p>
         </div>
         <div className="rounded-xl bg-slate-100 p-2.5 text-slate-600">
@@ -73,9 +73,9 @@ export const ExpenseBreakdownChart: React.FC<ExpenseBreakdownChartProps> = ({
           <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400">
             <PieChart className="h-6 w-6" />
           </div>
-          <p className="text-sm font-semibold text-slate-700">Sin gastos registrados</p>
+          <p className="text-sm font-semibold text-slate-700">No expenses recorded</p>
           <p className="mt-1 max-w-xs text-xs text-slate-500">
-            Registra suscripciones o egresos con categoría para visualizar su distribución.
+            Record subscriptions or categorized expenses to see their breakdown.
           </p>
         </div>
       ) : (
@@ -85,7 +85,7 @@ export const ExpenseBreakdownChart: React.FC<ExpenseBreakdownChartProps> = ({
               viewBox="0 0 120 120"
               className="h-full w-full -rotate-90"
               role="img"
-              aria-label={`Distribución de gastos por categoría. Total: ${formatCurrency(
+              aria-label={`Expense breakdown by category. Total: ${formatCurrency(
                 chartTotal
               )}`}
             >
@@ -120,7 +120,7 @@ export const ExpenseBreakdownChart: React.FC<ExpenseBreakdownChartProps> = ({
                 {formatCurrency(totalOpex > 0 ? totalOpex : chartTotal)}
               </span>
               <span className="text-[10px] text-slate-400">
-                {categories.length} categorías
+                {categories.length} categories
               </span>
             </div>
           </div>

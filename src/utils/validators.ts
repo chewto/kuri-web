@@ -29,13 +29,13 @@ export const validatePhone = (
   const value = (phone || '').trim();
 
   if (!value) {
-    return required ? 'El teléfono es obligatorio' : null;
+    return required ? 'Phone number is required' : null;
   }
 
   const nationalDigits = getNationalPhoneDigits(value);
 
   if (nationalDigits.length !== PHONE_DIGITS) {
-    return `El teléfono debe tener exactamente ${PHONE_DIGITS} dígitos (ej: 4121234567)`;
+    return `Phone number must be exactly ${PHONE_DIGITS} digits (e.g., 4121234567)`;
   }
 
   return null;

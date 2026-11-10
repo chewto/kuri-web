@@ -29,12 +29,12 @@ export const FinanceSummaryPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [errorNotification, setErrorNotification] = useState<string | null>(null);
 
-  // Modales
+  // Modals
   const [subModalOpen, setSubModalOpen] = useState(false);
   const [txModalOpen, setTxModalOpen] = useState(false);
   const [catModalOpen, setCatModalOpen] = useState(false);
 
-  // CategorA-as compartidas para los selects de los modales
+  // Shared categories for the modal selects
   const [categories, setCategories] = useState<Category[]>([]);
 
   const fetchCategories = useCallback(async () => {
@@ -42,7 +42,7 @@ export const FinanceSummaryPage: React.FC = () => {
       const data = await getCategories();
       setCategories(data);
     } catch {
-      // Ignorar error de categorA-as secundarias
+      // Ignore secondary category error
     }
   }, []);
 
@@ -58,7 +58,7 @@ export const FinanceSummaryPage: React.FC = () => {
       setSummary(data);
     } catch {
       setErrorNotification(
-        'No se pudo cargar el resumen financiero. Verifica la conexión con el servidor.'
+        "Couldn't load the financial summary. Check the server connection."
       );
     } finally {
       setIsLoading(false);
@@ -87,11 +87,11 @@ export const FinanceSummaryPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <DollarSign className="w-5 h-5 text-emerald-600" />
             <h1 className="text-xl font-bold text-slate-900">
-              Visión General Financiera & OPEX
+              Financial Overview & OPEX
             </h1>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            Control consolidado de costes operativos fijos, suscripciones de software y flujo de caja mensual.
+            Consolidated view of fixed operating costs, software subscriptions, and monthly cash flow.
           </p>
         </div>
 
@@ -101,7 +101,7 @@ export const FinanceSummaryPage: React.FC = () => {
             size="sm"
             onClick={fetchSummary}
             disabled={isLoading}
-            title="Recargar métricas"
+            title="Refresh metrics"
           >
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
           </Button>
@@ -111,7 +111,7 @@ export const FinanceSummaryPage: React.FC = () => {
             onClick={() => setSubModalOpen(true)}
           >
             <Repeat className="w-4 h-4 text-emerald-600" />
-            <span>Nueva Suscripción</span>
+            <span>New Subscription</span>
           </Button>
           <Button
             variant="primary"
@@ -119,7 +119,7 @@ export const FinanceSummaryPage: React.FC = () => {
             onClick={() => setTxModalOpen(true)}
           >
             <Plus className="w-4 h-4" />
-            <span>Nuevo Movimiento</span>
+            <span>New Transaction</span>
           </Button>
         </div>
       </div>
@@ -137,36 +137,36 @@ export const FinanceSummaryPage: React.FC = () => {
         </div>
       )}
 
-      {/* Tarjetas KPI Financieras */}
+      {/* Financial KPI cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
-          title="Gasto Fijo Mensual (MRR OPEX)"
+          title="Monthly Fixed Cost (MRR OPEX)"
           amount={summary?.monthly_expense_mrr || 0}
-          subtitle={`${summary?.active_subscriptions_count || 0} suscripciones SaaS activas`}
+          subtitle={`${summary?.active_subscriptions_count || 0} active SaaS subscriptions`}
           icon={Repeat}
           variant="slate"
         />
 
         <MetricCard
-          title="Ingresos del Mes Actual"
+          title="Income This Month"
           amount={summary?.current_month_balance.total_income || 0}
-          subtitle="Cobros y facturación registrados"
+          subtitle="Recorded payments and invoices"
           icon={TrendingUp}
           variant="emerald"
         />
 
         <MetricCard
-          title="Gastos del Mes Actual"
+          title="Expenses This Month"
           amount={summary?.current_month_balance.total_expenses || 0}
-          subtitle="Salidas de caja en el mes"
+          subtitle="Cash outflows this month"
           icon={TrendingDown}
           variant="rose"
         />
 
         <MetricCard
-          title="Balance Neto del Mes"
+          title="Net Balance This Month"
           amount={summary?.current_month_balance.net_balance || 0}
-          subtitle={`Total de ${summary?.current_month_balance.transactions_count || 0} transacciones`}
+          subtitle={`${summary?.current_month_balance.transactions_count || 0} transactions total`}
           icon={DollarSign}
           variant={
             (summary?.current_month_balance.net_balance || 0) >= 0
@@ -176,7 +176,7 @@ export const FinanceSummaryPage: React.FC = () => {
         />
       </div>
 
-      {/* Main Grid: Upcoming Renewals + Cash Flow Summary */}
+      {/* Main grid: upcoming renewals + cash flow summary */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left: Upcoming Renewals Widget */}
         <div className="lg:col-span-2">
@@ -199,10 +199,10 @@ export const FinanceSummaryPage: React.FC = () => {
               </div>
               <div>
                 <h3 className="text-sm font-bold text-slate-900">
-                  Resumen de Ciclo y Caja
+                  Cycle & Cash Summary
                 </h3>
                 <p className="text-xs text-slate-500">
-                  Periodo actual en curso
+                  Current period in progress
                 </p>
               </div>
             </div>
@@ -211,23 +211,23 @@ export const FinanceSummaryPage: React.FC = () => {
               <div className="flex items-center justify-between">
                 <span className="text-slate-500 flex items-center gap-1.5">
                   <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                  Periodo de corte:
+                  Period:
                 </span>
                 <span className="font-semibold text-slate-800">
-                  {summary?.current_month_balance.start_date || '---'} al{' '}
+                  {summary?.current_month_balance.start_date || '---'} to{' '}
                   {summary?.current_month_balance.end_date || '---'}
                 </span>
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-slate-500">Herramientas registradas:</span>
+                <span className="text-slate-500">Tools registered:</span>
                 <span className="font-semibold text-slate-800">
-                  {summary?.active_subscriptions_count || 0} activas
+                  {summary?.active_subscriptions_count || 0} active
                 </span>
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-slate-500">Total movimientos mes:</span>
+                <span className="text-slate-500">Transactions this month:</span>
                 <span className="font-semibold text-slate-800">
                   {summary?.current_month_balance.transactions_count || 0}
                 </span>
@@ -237,10 +237,10 @@ export const FinanceSummaryPage: React.FC = () => {
             {/* Quick action banners */}
             <div className="mt-6 p-4 bg-slate-50 rounded-xl border border-slate-200/80">
               <h4 className="text-xs font-bold text-slate-800">
-                Gestión de OPEX y Software
+                OPEX & Software Management
               </h4>
               <p className="text-[11px] text-slate-500 mt-1">
-                Centraliza las licencias de herramientas como Claude, AWS, Google Workspace y Figma para auditar costes por equipo o cliente.
+                Track licenses for tools like Claude, AWS, Google Workspace, and Figma to audit costs by team or client.
               </p>
               <div className="mt-3 flex items-center gap-2">
                 <button
@@ -248,14 +248,14 @@ export const FinanceSummaryPage: React.FC = () => {
                   onClick={() => setCatModalOpen(true)}
                   className="text-xs font-semibold text-emerald-600 hover:text-emerald-700"
                 >
-                  Gestionar Categorías →
+                  Manage Categories →
                 </button>
               </div>
             </div>
           </div>
 
           <div className="pt-4 border-t border-slate-100 text-[11px] text-slate-400 text-center">
-            Métricas calculadas en tiempo real para tu organización
+            Metrics calculated in real time for your organization
           </div>
         </div>
       </div>

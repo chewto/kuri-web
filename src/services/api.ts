@@ -7,7 +7,7 @@ const api = axios.create({
   },
 });
 
-// Interceptor de Petición: adjunta el token JWT guardado en localStorage
+// Request interceptor: attaches the JWT token stored in localStorage
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('token');
@@ -21,17 +21,17 @@ api.interceptors.request.use(
   }
 );
 
-// Interceptor de Respuesta: captura errores 401 para limpiar la sesión expirada
+// Response interceptor: catches 401 errors and clears the expired session
 api.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
     if (error.response?.status === 401) {
       const currentPath = window.location.pathname;
-      // Limpiar datos de autenticación
+      // Clear authentication data
       localStorage.removeItem('token');
       localStorage.removeItem('refresh_token');
 
-      // Redirigir a login si no estamos en una ruta pública
+      // Redirect to login unless we are already on a public route
       if (currentPath !== '/login' && currentPath !== '/register') {
         window.location.href = '/login';
       }

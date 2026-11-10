@@ -13,21 +13,21 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities, 
       case 'call':
         return {
           icon: Phone,
-          label: 'Llamada',
+          label: 'Call',
           bg: 'bg-emerald-50 text-emerald-700 border-emerald-200',
           dotBg: 'bg-emerald-500',
         };
       case 'email':
         return {
           icon: Mail,
-          label: 'Correo',
+          label: 'Email',
           bg: 'bg-sky-50 text-sky-700 border-sky-200',
           dotBg: 'bg-sky-500',
         };
       case 'meeting':
         return {
           icon: Calendar,
-          label: 'Reunión',
+          label: 'Meeting',
           bg: 'bg-purple-50 text-purple-700 border-purple-200',
           dotBg: 'bg-purple-500',
         };
@@ -35,7 +35,7 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities, 
       default:
         return {
           icon: FileText,
-          label: 'Nota',
+          label: 'Note',
           bg: 'bg-amber-50 text-amber-700 border-amber-200',
           dotBg: 'bg-amber-500',
         };
@@ -45,11 +45,11 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities, 
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString);
-      return new Intl.DateTimeFormat('es-ES', {
-        day: '2-digit',
+      return new Intl.DateTimeFormat('en-US', {
         month: 'short',
+        day: 'numeric',
         year: 'numeric',
-        hour: '2-digit',
+        hour: 'numeric',
         minute: '2-digit',
       }).format(date);
     } catch {
@@ -61,7 +61,7 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities, 
     return (
       <div className="bg-white rounded-xl border border-slate-200 p-8 text-center shadow-sm">
         <div className="inline-block animate-spin rounded-full h-7 w-7 border-b-2 border-emerald-600"></div>
-        <p className="mt-2 text-xs text-slate-500">Cargando historial de actividades...</p>
+        <p className="mt-2 text-xs text-slate-500">Loading activity history...</p>
       </div>
     );
   }
@@ -72,9 +72,9 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities, 
         <div className="mx-auto w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-2">
           <Clock className="w-5 h-5" />
         </div>
-        <h4 className="text-xs font-semibold text-slate-700">Sin actividades registradas</h4>
+        <h4 className="text-xs font-semibold text-slate-700">No activities recorded</h4>
         <p className="text-[11px] text-slate-400 mt-1 max-w-xs mx-auto">
-          Usa el formulario superior para añadir la primera llamada, correo, minuta o nota de este contacto.
+          Use the form above to add this contact's first call, email, meeting notes, or note.
         </p>
       </div>
     );
@@ -84,9 +84,9 @@ export const ActivityTimeline: React.FC<ActivityTimelineProps> = ({ activities, 
     <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
       <h3 className="text-sm font-bold text-slate-800 mb-6 flex items-center gap-2">
         <Clock className="w-4 h-4 text-emerald-600" />
-        <span>Línea de Tiempo de Interacciones</span>
+        <span>Interaction Timeline</span>
         <span className="ml-auto text-xs font-normal text-slate-400">
-          {activities.length} {activities.length === 1 ? 'registro' : 'registros'}
+          {activities.length} {activities.length === 1 ? 'entry' : 'entries'}
         </span>
       </h3>
 

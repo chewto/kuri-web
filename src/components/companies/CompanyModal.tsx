@@ -54,14 +54,14 @@ export const CompanyModal: React.FC<CompanyModalProps> = ({
 
   if (!isOpen) return null;
 
-  // Sanitizador de teléfono: solo permite '+' al inicio y dígitos
+  // Phone sanitizer: allows only a leading '+' and digits
   const handlePhoneChange = (value: string) => {
     setFormData((prev) => ({ ...prev, phone: sanitizePhone(value) }));
   };
 
-  // Sanitizador y formateador de RIF / Tax ID (Ej: J-12345678-9 o J-12345678)
+  // Tax ID sanitizer and formatter (e.g., J-12345678-9 or J-12345678)
   const handleTaxIdChange = (value: string) => {
-    // Convertir a mayúsculas y permitir letras de RIF (J, G, V, E, C) seguido de números y guiones
+    // Convert to uppercase and allow tax ID prefixes (J, G, V, E, C) followed by digits and hyphens
     const upper = value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
     setFormData((prev) => ({ ...prev, tax_id: upper }));
   };
@@ -69,43 +69,44 @@ export const CompanyModal: React.FC<CompanyModalProps> = ({
   const validate = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    // 1. Nombre
+    // 1. Name
     if (!formData.name.trim()) {
-      newErrors.name = 'El nombre de la empresa es obligatorio';
+      newErrors.name = 'Company name is required';
     }
 
-    // 2. Documento fiscal / RIF
-    // Formatos válidos: J-12345678, J-12345678-0, G-12345678-9, V-12345678, etc. o alfanumérico fiscal estándar
+    // 2. Tax ID
+    // Valid formats: J-12345678, J-12345678-0, G-12345678-9, V-12345678, etc.,
+    // or a standard alphanumeric tax ID.
     const rifRegex = /^[JGVECjgvec]-?\d{7,9}(-?\d)?$/;
     if (!formData.tax_id?.trim()) {
-      newErrors.tax_id = 'El RIF / Tax ID es obligatorio';
+      newErrors.tax_id = 'Tax ID is required';
     } else if (!rifRegex.test(formData.tax_id.trim())) {
-      newErrors.tax_id = 'Formato de RIF inválido. Ej: J-12345678-9 o J-12345678';
+      newErrors.tax_id = 'Invalid tax ID format. Example: J-12345678-9 or J-12345678';
     }
 
-    // 3. Industria
+    // 3. Industry
     if (!formData.industry?.trim()) {
-      newErrors.industry = 'El sector o industria es obligatorio';
+      newErrors.industry = 'Industry or sector is required';
     }
 
-    // 4. Sitio Web (URL real con o sin protocolo: dominio.tld)
+    // 4. Website (a real URL with or without a protocol: domain.tld)
     const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/[^\s]*)?$/i;
     if (!formData.website?.trim()) {
-      newErrors.website = 'El sitio web es obligatorio';
+      newErrors.website = 'Website is required';
     } else if (!urlRegex.test(formData.website.trim())) {
-      newErrors.website = 'Ingresa una URL real y válida (ej: empresa.com o https://empresa.com)';
+      newErrors.website = 'Enter a valid URL (e.g., company.com or https://company.com)';
     }
 
-    // 5. Teléfono: solo números, sin letras. Máximo 10 dígitos nacionales
-    // (ignorando el código de país 58 y el 0 inicial)
+    // 5. Phone: digits only, no letters. Up to 10 national digits.
+    // (ignoring the country code 58 and the leading 0)
     const phoneError = validatePhone(formData.phone || '', { required: true });
     if (phoneError) {
       newErrors.phone = phoneError;
     }
 
-    // 6. Dirección
+    // 6. Address
     if (!formData.address?.trim()) {
-      newErrors.address = 'La dirección fiscal o física es obligatoria';
+      newErrors.address = 'Tax or physical address is required';
     }
 
     setErrors(newErrors);
@@ -123,7 +124,7 @@ export const CompanyModal: React.FC<CompanyModalProps> = ({
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       setErrors({
-        submit: error.response?.data?.message || 'Error al guardar la empresa. Revisa los datos.',
+        submit: error.response?.data?.message || 'Could not save the company. Check your information.',
       });
     } finally {
       setIsSubmitting(false);
@@ -141,10 +142,10 @@ export const CompanyModal: React.FC<CompanyModalProps> = ({
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-800">
-                {initialData ? 'Editar Empresa' : 'Nueva Empresa'}
+                {initialData ? 'Edit Company' : 'New Company'}
               </h2>
               <p className="text-xs text-slate-500">
-                {initialData ? 'Modifica los detalles de la organización' : 'Registra una nueva cuenta corporativa'}
+                {initialData ? "Update the organization's details" : 'Add a new corporate account'}
               </p>
             </div>
           </div>
@@ -165,29 +166,29 @@ export const CompanyModal: React.FC<CompanyModalProps> = ({
           )}
 
           <Input
-            label="Nombre de la Empresa *"
+            label="Company name *"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            placeholder="Ej: Inversiones Tecnológicas S.A."
+            placeholder="Acme Technologies Inc."
             error={errors.name}
             required
           />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
-              label="RIF / Identificación Fiscal *"
+              label="Tax ID / Registration Number *"
               value={formData.tax_id || ''}
               onChange={(e) => handleTaxIdChange(e.target.value)}
-              placeholder="Ej: J-12345678-9"
-              helperText="Prefijo J-, G-, V- o E- seguido de dígitos"
+              placeholder="e.g., J-12345678-9"
+              helperText="Prefix J-, G-, V-, or E- followed by digits"
               error={errors.tax_id}
               required
             />
             <Input
-              label="Industria / Sector *"
+              label="Industry / Sector *"
               value={formData.industry || ''}
               onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
-              placeholder="Ej: Software, Retail, Alimentos"
+              placeholder="e.g., Software, Retail, Food"
               error={errors.industry}
               required
             />
@@ -195,41 +196,41 @@ export const CompanyModal: React.FC<CompanyModalProps> = ({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Input
-              label="Sitio Web *"
+              label="Website *"
               value={formData.website || ''}
               onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-              placeholder="Ej: miempresa.com o https://miempresa.com"
-              helperText="Dominio válido (ej: empresa.com)"
+              placeholder="e.g., company.com or https://company.com"
+              helperText="Valid domain (e.g., company.com)"
               error={errors.website}
               required
             />
             <Input
-              label="Teléfono corporativo *"
+              label="Company phone *"
               type="tel"
               value={formData.phone || ''}
               onChange={(e) => handlePhoneChange(e.target.value)}
-              placeholder="Ej: +58 4121234567"
-              helperText="Solo números, exactamente 10 dígitos (ej: 4121234567)"
+              placeholder="e.g., +58 4121234567"
+              helperText="Numbers only, exactly 10 digits (e.g., 4121234567)"
               error={errors.phone}
               required
             />
           </div>
 
           <Input
-            label="Dirección fiscal o física *"
+            label="Tax or physical address *"
             value={formData.address || ''}
             onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-            placeholder="Ej: Av. de la Innovación 42, Planta 3"
+            placeholder="42 Innovation Ave, Floor 3"
             error={errors.address}
             required
           />
 
           <div className="pt-4 flex items-center justify-end gap-3 border-t border-slate-100">
             <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
-              Cancelar
+              Cancel
             </Button>
             <Button type="submit" variant="primary" isLoading={isSubmitting}>
-              {initialData ? 'Actualizar Empresa' : 'Crear Empresa'}
+              {initialData ? 'Save changes' : 'Create Company'}
             </Button>
           </div>
         </form>

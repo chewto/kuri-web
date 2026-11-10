@@ -9,12 +9,12 @@ interface DealForecastWidgetProps {
 }
 
 const formatPeriod = (forecast: DealForecast | null): string => {
-  if (!forecast?.period) return 'Periodo actual';
+  if (!forecast?.period) return 'Current period';
 
   const date = new Date(forecast.period.year, forecast.period.month - 1, 1);
-  if (Number.isNaN(date.getTime())) return 'Periodo actual';
+  if (Number.isNaN(date.getTime())) return 'Current period';
 
-  return new Intl.DateTimeFormat('es-VE', {
+  return new Intl.DateTimeFormat('en-US', {
     month: 'long',
     year: 'numeric',
   }).format(date);
@@ -47,11 +47,11 @@ export const DealForecastWidget: React.FC<DealForecastWidgetProps> = ({ forecast
 
   return (
     <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {/* 1. Pipeline Total Abierto */}
+      {/* 1. Total Open Pipeline */}
       <div className="rounded-xl border border-slate-200/80 bg-white p-5 shadow-sm transition-colors hover:border-slate-300">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Pipeline Total
+            Total Pipeline
           </span>
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-50 text-emerald-600">
             <DollarSign className="h-4 w-4" />
@@ -62,16 +62,16 @@ export const DealForecastWidget: React.FC<DealForecastWidgetProps> = ({ forecast
             {formatCurrency(openValue)}
           </div>
           <div className="mt-1 flex items-center gap-1.5 text-xs text-slate-500">
-            <span className="font-semibold text-emerald-600">{openCount}</span> tratos en curso
+            <span className="font-semibold text-emerald-600">{openCount}</span> deals in progress
           </div>
         </div>
       </div>
 
-      {/* 2. Negocios Ganados este Mes */}
+      {/* 2. Deals Won This Month */}
       <div className="rounded-xl border border-slate-200/80 bg-white p-5 shadow-sm transition-colors hover:border-slate-300">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Ganados Este Mes
+            Won This Month
           </span>
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
             <CheckCircle2 className="h-4 w-4" />
@@ -83,19 +83,19 @@ export const DealForecastWidget: React.FC<DealForecastWidgetProps> = ({ forecast
           </div>
           <div
             className="mt-1 flex items-center gap-1.5 text-xs text-slate-500"
-            title="Conteo histórico de tratos ganados del tenant"
+            title="Historical count of won deals for this workspace"
           >
-            <span className="font-semibold text-blue-600">{wonCount}</span> ganados en total
+            <span className="font-semibold text-blue-600">{wonCount}</span> won overall
             <span className="text-slate-400">· {periodLabel}</span>
           </div>
         </div>
       </div>
 
-      {/* 3. Forecast Ponderado */}
+      {/* 3. Weighted Forecast */}
       <div className="rounded-xl border border-slate-200/80 bg-white p-5 shadow-sm transition-colors hover:border-slate-300">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Forecast Ponderado
+            Weighted Forecast
           </span>
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-50 text-amber-600">
             <TrendingUp className="h-4 w-4" />
@@ -106,16 +106,16 @@ export const DealForecastWidget: React.FC<DealForecastWidgetProps> = ({ forecast
             {formatCurrency(weightedValue)}
           </div>
           <div className="mt-1 flex items-center gap-1.5 text-xs text-slate-500">
-            Proyección según probabilidad de etapa
+            Projection based on stage probability
           </div>
         </div>
       </div>
 
-      {/* 4. Resumen de Estados */}
+      {/* 4. Status Summary */}
       <div className="rounded-xl border border-slate-200/80 bg-white p-5 shadow-sm transition-colors hover:border-slate-300">
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Distribución Total
+            Total Distribution
           </span>
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-50 text-purple-600">
             <BarChart3 className="h-4 w-4" />
@@ -124,17 +124,17 @@ export const DealForecastWidget: React.FC<DealForecastWidgetProps> = ({ forecast
         <div className="mt-2.5 flex items-center gap-3">
           <div>
             <span className="block text-lg font-bold text-emerald-600">{openCount}</span>
-            <span className="text-[11px] text-slate-400">Abiertos</span>
+            <span className="text-[11px] text-slate-400">Open</span>
           </div>
           <div className="h-6 w-px bg-slate-200" />
           <div>
             <span className="block text-lg font-bold text-blue-600">{wonCount}</span>
-            <span className="text-[11px] text-slate-400">Ganados</span>
+            <span className="text-[11px] text-slate-400">Won</span>
           </div>
           <div className="h-6 w-px bg-slate-200" />
           <div>
             <span className="block text-lg font-bold text-rose-500">{lostCount}</span>
-            <span className="text-[11px] text-slate-400">Perdidos</span>
+            <span className="text-[11px] text-slate-400">Lost</span>
           </div>
         </div>
       </div>

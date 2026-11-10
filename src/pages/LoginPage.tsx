@@ -3,8 +3,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/common/Button';
 import { Input } from '../components/common/Input';
-import { Mail, Lock, Layers, AlertCircle, ArrowRight } from 'lucide-react';
+import { Mail, Lock, AlertCircle, ArrowRight } from 'lucide-react';
 import axios from 'axios';
+import { BrandLogo } from '../components/common/BrandLogo';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ export const LoginPage: React.FC = () => {
     setErrorMessage(null);
 
     if (!email.trim() || !password.trim()) {
-      setErrorMessage('Por favor ingresa tanto el correo como la contraseña.');
+      setErrorMessage('Enter both your email and password.');
       return;
     }
 
@@ -31,10 +32,10 @@ export const LoginPage: React.FC = () => {
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         setErrorMessage(
-          err.response?.data?.message || 'Error al autenticar. Verifica tus credenciales.'
+          err.response?.data?.message || 'Authentication failed. Check your credentials.'
         );
       } else {
-        setErrorMessage('Ocurrió un error inesperado al iniciar sesión.');
+        setErrorMessage('An unexpected error occurred while signing in.');
       }
     } finally {
       setIsSubmitting(false);
@@ -44,14 +45,12 @@ export const LoginPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-4">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="inline-flex h-12 w-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 items-center justify-center text-emerald-400 mb-4 shadow-sm">
-          <Layers className="h-6 w-6" />
-        </div>
+        <BrandLogo size="md" className="mb-4" />
         <h2 className="text-2xl font-bold tracking-tight text-white">
-          Acceso al CRM Core
+          Sign in to Kuri
         </h2>
         <p className="mt-2 text-xs text-slate-400">
-          Inicia sesión en el espacio de trabajo de tu organización
+          Sign in to your organization's workspace
         </p>
       </div>
 
@@ -67,12 +66,12 @@ export const LoginPage: React.FC = () => {
           <form className="space-y-5" onSubmit={handleSubmit}>
             <div>
               <Input
-                label="Correo Electrónico"
+                label="Email address"
                 labelClassName="text-white"
                 type="email"
                 autoComplete="email"
                 required
-                placeholder="admin@empresa.com"
+                placeholder="admin@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 leftIcon={<Mail className="h-4 w-4" />}
@@ -82,7 +81,7 @@ export const LoginPage: React.FC = () => {
 
             <div>
               <Input
-                label="Contraseña"
+                label="Password"
                 labelClassName="text-white"
                 type="password"
                 autoComplete="current-password"
@@ -102,19 +101,19 @@ export const LoginPage: React.FC = () => {
                 className="w-full mt-2"
                 isLoading={isSubmitting}
               >
-                Ingresar al CRM <ArrowRight className="h-4 w-4" />
+                Sign in to Kuri <ArrowRight className="h-4 w-4" />
               </Button>
             </div>
           </form>
 
           <div className="mt-6 pt-6 border-t border-slate-800/80 text-center">
             <p className="text-xs text-slate-400">
-              ¿Aún no tienes una organización registrada?{' '}
+              Don't have a workspace yet?{' '}
               <Link
                 to="/register"
                 className="font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
               >
-                Registrar Tenant
+                Create workspace
               </Link>
             </p>
           </div>

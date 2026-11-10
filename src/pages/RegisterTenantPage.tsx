@@ -3,8 +3,9 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Button } from '../components/common/Button';
 import { Input } from '../components/common/Input';
-import { Building2, Mail, Lock, Layers, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Building2, Mail, Lock, AlertCircle, CheckCircle2 } from 'lucide-react';
 import axios from 'axios';
+import { BrandLogo } from '../components/common/BrandLogo';
 
 export const RegisterTenantPage: React.FC = () => {
   const navigate = useNavigate();
@@ -22,12 +23,12 @@ export const RegisterTenantPage: React.FC = () => {
     setErrorMessage(null);
 
     if (!tenantName.trim() || !email.trim() || !password.trim()) {
-      setErrorMessage('Todos los campos son obligatorios.');
+      setErrorMessage('All fields are required.');
       return;
     }
 
     if (password.length < 6) {
-      setErrorMessage('La contraseña debe tener un mínimo de 6 caracteres.');
+      setErrorMessage('Password must be at least 6 characters.');
       return;
     }
 
@@ -43,10 +44,10 @@ export const RegisterTenantPage: React.FC = () => {
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         setErrorMessage(
-          err.response?.data?.message || 'Error al registrar la organización. Intenta nuevamente.'
+          err.response?.data?.message || 'Could not create the workspace. Please try again.'
         );
       } else {
-        setErrorMessage('Ocurrió un error inesperado al registrar el Tenant.');
+        setErrorMessage('An unexpected error occurred while creating the workspace.');
       }
     } finally {
       setIsSubmitting(false);
@@ -56,14 +57,12 @@ export const RegisterTenantPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 px-4">
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-        <div className="inline-flex h-12 w-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 items-center justify-center text-emerald-400 mb-4 shadow-sm">
-          <Layers className="h-6 w-6" />
-        </div>
+        <BrandLogo size="md" className="mb-4" />
         <h2 className="text-2xl font-bold tracking-tight text-white">
-          Registrar Nueva Organización
+          Create a New Workspace
         </h2>
         <p className="mt-2 text-xs text-slate-400">
-          Crea tu Tenant e inicia con la cuenta administradora inicial
+          Set up your Kuri workspace with the initial administrator account
         </p>
       </div>
 
@@ -79,7 +78,7 @@ export const RegisterTenantPage: React.FC = () => {
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <Input
-                label="Nombre de la Empresa / Organización"
+                label="Workspace name"
                 labelClassName="text-white"
                 type="text"
                 required
@@ -93,11 +92,11 @@ export const RegisterTenantPage: React.FC = () => {
 
             <div>
               <Input
-                label="Correo del Administrador"
+                label="Administrator email"
                 labelClassName="text-white"
                 type="email"
                 required
-                placeholder="admin@empresa.com"
+                placeholder="admin@company.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 leftIcon={<Mail className="h-4 w-4" />}
@@ -107,11 +106,11 @@ export const RegisterTenantPage: React.FC = () => {
 
             <div>
               <Input
-                label="Contraseña"
+                label="Password"
                 labelClassName="text-white"
                 type="password"
                 required
-                placeholder="Mínimo 6 caracteres"
+                placeholder="Minimum 6 characters"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 leftIcon={<Lock className="h-4 w-4" />}
@@ -121,7 +120,7 @@ export const RegisterTenantPage: React.FC = () => {
 
             <div>
               <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1.5">
-                Plan de Inicio
+                Starting plan
               </label>
               <div className="grid grid-cols-2 gap-3">
                 <button
@@ -134,8 +133,8 @@ export const RegisterTenantPage: React.FC = () => {
                   }`}
                 >
                   <div>
-                    <p className="font-semibold text-slate-200">Plan Gratuito</p>
-                    <p className="text-[10px] text-slate-400">Básico para inicio</p>
+                    <p className="font-semibold text-slate-200">Free plan</p>
+                    <p className="text-[10px] text-slate-400">Essentials to get started</p>
                   </div>
                   {plan === 'free' && <CheckCircle2 className="h-4 w-4 text-emerald-400" />}
                 </button>
@@ -150,8 +149,8 @@ export const RegisterTenantPage: React.FC = () => {
                   }`}
                 >
                   <div>
-                    <p className="font-semibold text-slate-200">Plan Pro</p>
-                    <p className="text-[10px] text-slate-400">Escalamiento B2B</p>
+                    <p className="font-semibold text-slate-200">Pro plan</p>
+                    <p className="text-[10px] text-slate-400">Built to scale B2B teams</p>
                   </div>
                   {plan === 'pro' && <CheckCircle2 className="h-4 w-4 text-emerald-400" />}
                 </button>
@@ -165,19 +164,19 @@ export const RegisterTenantPage: React.FC = () => {
                 className="w-full mt-3"
                 isLoading={isSubmitting}
               >
-                Crear Organización y Empezar
+                Create Workspace and Get Started
               </Button>
             </div>
           </form>
 
           <div className="mt-6 pt-6 border-t border-slate-800/80 text-center">
             <p className="text-xs text-slate-400">
-              ¿Ya tienes una cuenta registrada?{' '}
+              Already have an account?{' '}
               <Link
                 to="/login"
                 className="font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
               >
-                Iniciar sesión
+                Sign in
               </Link>
             </p>
           </div>

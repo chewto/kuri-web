@@ -39,12 +39,12 @@ export const TenantSettingsPage: React.FC = () => {
     try {
       await navigator.clipboard.writeText(tenant.id);
       setCopied(true);
-      setFeedback({ tone: 'success', message: 'Tenant ID copiado al portapapeles.' });
+      setFeedback({ tone: 'success', message: 'Workspace ID copied to clipboard.' });
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
       setFeedback({
         tone: 'error',
-        message: 'No se pudo copiar el Tenant ID. Tu navegador puede bloquear el portapapeles.',
+        message: "Couldn't copy the Workspace ID. Your browser may block clipboard access.",
       });
     }
   };
@@ -57,12 +57,12 @@ export const TenantSettingsPage: React.FC = () => {
       await refreshProfile();
       setFeedback({
         tone: 'success',
-        message: 'Datos de la organización sincronizados con el servidor.',
+        message: 'Workspace data synced with the server.',
       });
     } catch {
       setFeedback({
         tone: 'error',
-        message: 'No se pudieron sincronizar los datos de la organización.',
+        message: "Couldn't sync workspace data.",
       });
     } finally {
       setIsSyncing(false);
@@ -76,14 +76,14 @@ export const TenantSettingsPage: React.FC = () => {
           <Building2 className="h-6 w-6" />
         </div>
         <h2 className="text-sm font-semibold text-slate-800">
-          No hay una organización cargada
+          No workspace loaded
         </h2>
         <p className="mx-auto mt-1 max-w-sm text-xs text-slate-500">
-          Sincroniza la sesión para recuperar los datos del tenant desde el servidor.
+          Sync the session to reload workspace data from the server.
         </p>
         <Button variant="outline" size="md" className="mt-4" onClick={handleSync} isLoading={isSyncing}>
           <RefreshCw className="h-4 w-4" />
-          Sincronizar datos
+          Sync data
         </Button>
       </div>
     );
@@ -95,10 +95,10 @@ export const TenantSettingsPage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <Settings className="h-5 w-5 text-emerald-600" />
-            <h1 className="text-xl font-bold text-slate-900">Configuración del Tenant</h1>
+            <h1 className="text-xl font-bold text-slate-900">Workspace Settings</h1>
           </div>
           <p className="mt-1 text-xs text-slate-500">
-            Resumen de la organización, plan activo y datos de la sesión actual.
+            An overview of the workspace, active plan, and current session details.
           </p>
         </div>
         <Button
@@ -106,10 +106,10 @@ export const TenantSettingsPage: React.FC = () => {
           size="md"
           onClick={handleSync}
           isLoading={isSyncing}
-          title="Sincronizar datos con el servidor"
+          title="Sync data with the server"
         >
           <RefreshCw className="h-4 w-4" />
-          <span>Sincronizar datos</span>
+          <span>Sync data</span>
         </Button>
       </div>
 
@@ -133,7 +133,7 @@ export const TenantSettingsPage: React.FC = () => {
             type="button"
             onClick={() => setFeedback(null)}
             className="ml-4 font-bold opacity-70 hover:opacity-100"
-            aria-label="Cerrar notificación"
+            aria-label="Dismiss notification"
           >
             ✕
           </button>
@@ -149,9 +149,9 @@ export const TenantSettingsPage: React.FC = () => {
                   <Building2 className="h-5 w-5" />
                 </div>
                 <div>
-                  <h2 className="text-sm font-bold text-slate-900">Organización</h2>
+                  <h2 className="text-sm font-bold text-slate-900">Workspace</h2>
                   <p className="text-xs text-slate-500">
-                    Identidad y estado actual del workspace
+                    Workspace identity and current status
                   </p>
                 </div>
               </div>
@@ -167,20 +167,20 @@ export const TenantSettingsPage: React.FC = () => {
                     tenant.is_active ? 'bg-emerald-500' : 'bg-rose-500'
                   }`}
                 />
-                {tenant.is_active ? 'Activo' : 'Suspendido'}
+                {tenant.is_active ? 'Active' : 'Suspended'}
               </span>
             </div>
 
             <div className="mt-4 grid grid-cols-1 gap-3 text-xs sm:grid-cols-2">
               <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-3">
                 <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400">
-                  Nombre
+                  Name
                 </p>
                 <p className="mt-1 text-sm font-semibold text-slate-800">{tenant.name}</p>
               </div>
               <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-3">
                 <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400">
-                  Plan activo
+                  Active plan
                 </p>
                 <p className="mt-1 flex items-center gap-1.5 text-sm font-semibold capitalize text-emerald-700">
                   <CreditCard className="h-3.5 w-3.5" />
@@ -189,7 +189,7 @@ export const TenantSettingsPage: React.FC = () => {
               </div>
               <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-3">
                 <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400">
-                  Fecha de alta
+                  Created on
                 </p>
                 <p className="mt-1 flex items-center gap-1.5 text-sm font-semibold text-slate-800">
                   <Calendar className="h-3.5 w-3.5 text-slate-400" />
@@ -198,7 +198,7 @@ export const TenantSettingsPage: React.FC = () => {
               </div>
               <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-3">
                 <p className="text-[11px] font-medium uppercase tracking-wider text-slate-400">
-                  Tu rol
+                  Your role
                 </p>
                 <div className="mt-1">
                   {user ? <RoleBadge role={user.role} /> : <span className="text-slate-400">—</span>}
@@ -210,9 +210,9 @@ export const TenantSettingsPage: React.FC = () => {
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <div className="flex items-start justify-between gap-3 border-b border-slate-100 pb-4">
               <div>
-                <h2 className="text-sm font-bold text-slate-900">Actualización básica</h2>
+                <h2 className="text-sm font-bold text-slate-900">Basic details</h2>
                 <p className="mt-0.5 text-xs text-slate-500">
-                  Datos generales que definen la organización
+                  General details that define the workspace
                 </p>
               </div>
               <ShieldCheck className="h-5 w-5 text-slate-300" />
@@ -220,11 +220,11 @@ export const TenantSettingsPage: React.FC = () => {
 
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Input
-                label="Nombre de la Organización"
+                label="Workspace name"
                 value={tenant.name}
                 disabled
                 readOnly
-                helperText="La edición del nombre requiere un endpoint de actualización."
+                helperText="Editing the name requires an update endpoint."
               />
               <div>
                 <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-700">
@@ -239,9 +239,8 @@ export const TenantSettingsPage: React.FC = () => {
             <div className="mt-4 flex items-start gap-2.5 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800">
               <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
               <p>
-                La API actual solo expone lectura del tenant. Los cambios de nombre o plan
-                se gestionan con el administrador de la plataforma; no se simulan guardados
-                locales.
+                The current API only supports reading workspace data. Name or plan changes
+                are handled by the platform administrator; local saves are not simulated.
               </p>
             </div>
 
@@ -250,9 +249,9 @@ export const TenantSettingsPage: React.FC = () => {
                 variant="primary"
                 size="md"
                 disabled
-                title="Función no disponible: el backend no expone actualización de tenant"
+                title="Not available: the backend doesn't expose workspace updates"
               >
-                Guardar cambios
+                Save changes
               </Button>
             </div>
           </div>
@@ -260,9 +259,9 @@ export const TenantSettingsPage: React.FC = () => {
 
         <div className="space-y-6">
           <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <h2 className="text-sm font-bold text-slate-900">Tenant ID</h2>
+            <h2 className="text-sm font-bold text-slate-900">Workspace ID</h2>
             <p className="mt-0.5 text-xs text-slate-500">
-              Identificador único de tu organización
+              Unique identifier for your workspace
             </p>
             <p className="mt-3 break-all rounded-xl border border-slate-200 bg-slate-50 p-3 font-mono text-xs text-slate-700">
               {tenant.id}
@@ -274,7 +273,7 @@ export const TenantSettingsPage: React.FC = () => {
               className="mt-3 w-full"
             >
               {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-              <span>{copied ? 'Copiado' : 'Copiar Tenant ID'}</span>
+              <span>{copied ? 'Copied' : 'Copy Workspace ID'}</span>
             </Button>
           </div>
 
@@ -284,36 +283,36 @@ export const TenantSettingsPage: React.FC = () => {
                 <Mail className="h-4 w-4" />
               </div>
               <div>
-                <h2 className="text-sm font-bold text-slate-900">Sesión actual</h2>
-                <p className="text-xs text-slate-500">Tu cuenta en este tenant</p>
+                <h2 className="text-sm font-bold text-slate-900">Current session</h2>
+                <p className="text-xs text-slate-500">Your account in this workspace</p>
               </div>
             </div>
             <div className="mt-4 space-y-3 text-xs">
               <div className="flex items-start justify-between gap-3">
-                <span className="text-slate-500">Correo</span>
+                <span className="text-slate-500">Email</span>
                 <span className="break-all text-right font-semibold text-slate-800">
                   {user?.email || '—'}
                 </span>
               </div>
               <div className="flex items-center justify-between gap-3">
-                <span className="text-slate-500">Rol</span>
+                <span className="text-slate-500">Role</span>
                 {user ? <RoleBadge role={user.role} /> : <span className="text-slate-400">—</span>}
               </div>
               <div className="flex items-center justify-between gap-3">
-                <span className="text-slate-500">Estado</span>
+                <span className="text-slate-500">Status</span>
                 <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-700">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  Activo
+                  Active
                 </span>
               </div>
             </div>
           </div>
 
           <div className="rounded-2xl border border-slate-200 bg-slate-900 p-5 text-slate-200 shadow-sm">
-            <h2 className="text-sm font-bold text-white">Soporte de plataforma</h2>
+            <h2 className="text-sm font-bold text-white">Platform support</h2>
             <p className="mt-1 text-xs leading-relaxed text-slate-400">
-              Para cambios de plan, facturación o edición del tenant, contacta al
-              administrador de la plataforma.
+              For plan changes, billing, or workspace edits, contact the platform
+              administrator.
             </p>
           </div>
         </div>
